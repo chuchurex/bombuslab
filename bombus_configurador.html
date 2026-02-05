@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bombus | Configurador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --honey: #F5A623;
+            --honey-dark: #C4841D;
+            --charcoal: #1A1A1A;
+            --warm-gray: #F7F5F2;
+            --cream: #FFFEF9;
+            --text-primary: #2D2D2D;
+            --text-secondary: #6B6B6B;
+            --border: #E8E4DE;
+            --success: #2E7D32;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text-primary);
+        }
+
+        /* Header */
+        header {
+            background: var(--charcoal);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--honey);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .back-link {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover { color: white; }
+
+        /* Layout */
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            min-height: calc(100vh - 56px);
+        }
+
+        @media (max-width: 900px) {
+            .main { grid-template-columns: 1fr; }
+            .viewer { height: 350px; }
+        }
+
+        /* Viewer */
+        .viewer {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            position: relative;
+        }
+
+        #canvas { width: 100%; height: 100%; display: block; }
+
+        .model-name {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: white;
+        }
+
+        .model-name h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+        }
+
+        .model-name p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .viewer-hint {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.7);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+        }
+
+        /* Panel */
+        .panel {
+            background: white;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: calc(100vh - 56px);
+        }
+
+        .section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section:last-of-type { border-bottom: none; }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Dimensions */
+        .dim-control {
+            margin-bottom: 1rem;
+        }
+
+        .dim-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .dim-value {
+            font-weight: 600;
+            color: var(--honey-dark);
+        }
+
+        .dim-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--warm-gray);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .dim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--charcoal);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Colors */
+        .colors {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .color-opt {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .color-opt:hover { transform: scale(1.1); }
+        .color-opt.active { border-color: var(--charcoal); }
+
+        /* Gadgets */
+        .gadget {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--warm-gray);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .gadget:hover { background: #e8e4de; }
+        .gadget.active { background: #e8f5e9; }
+
+        .gadget-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .gadget.active .gadget-check {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .gadget-info { flex: 1; }
+        .gadget-name { font-weight: 500; font-size: 0.9rem; }
+        .gadget-desc { font-size: 0.75rem; color: var(--text-secondary); }
+        .gadget-price { font-weight: 600; color: var(--honey-dark); font-size: 0.85rem; }
+
+        /* Summary */
+        .summary {
+            background: var(--charcoal);
+            color: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .summary-row.total {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        .summary-row.total .label { font-weight: 600; }
+
+        .summary-row.total .value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--honey);
+        }
+
+        /* CTA */
+        .cta-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover { background: #1b5e20; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="bombus_landing.html" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2">
+                    <ellipse cx="12" cy="13" rx="7" ry="8"/>
+                    <path d="M12 5V2M8 6l-2-3M16 6l2-3"/>
+                    <path d="M5 12h14M5 16h14" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <span class="logo-text">BOMBUS</span>
+        </a>
+        <a href="bombus_galeria.html" class="back-link">← Volver a galería</a>
+    </header>
+
+    <main class="main">
+        <div class="viewer">
+            <canvas id="canvas"></canvas>
+            <div class="model-name">
+                <h1 id="nombre">Modelo</h1>
+                <p id="desc">Descripción</p>
+            </div>
+            <div class="viewer-hint">Arrastra para rotar</div>
+        </div>
+
+        <div class="panel">
+            <!-- Dimensiones -->
+            <div class="section">
+                <div class="section-title">Dimensiones</div>
+                <div class="dim-control">
+                    <div class="dim-label"><span>Ancho</span><span class="dim-value" id="v-ancho">45 cm</span></div>
+                    <input type="range" class="dim-slider" id="s-ancho" min="35" max="60" value="45">
+                </div>
+                <div class="dim-control">
+                    <div class="dim-label"><span>Profundidad</span><span class="dim-value" id="v-prof">40 cm</span></div>
+                    <input type="range" class="dim-slider" id="s-prof" min="30" max="50" value="40">
+                </div>
+                <div class="dim-control">
+                    <div class="dim-label"><span>Alto</span><span class="dim-value" id="v-alto">55 cm</span></div>
+                    <input type="range" class="dim-slider" id="s-alto" min="40" max="70" value="55">
+                </div>
+            </div>
+
+            <!-- Color -->
+            <div class="section">
+                <div class="section-title">Color / Material</div>
+                <div class="colors">
+                    <div class="color-opt active" style="background:#FAFAFA;" data-color="0xFAFAFA" data-name="Blanco" data-mod="-10000"></div>
+                    <div class="color-opt" style="background:#1A1A1A;" data-color="0x1A1A1A" data-name="Negro" data-mod="-5000"></div>
+                    <div class="color-opt" style="background:#D4A574;" data-color="0xD4A574" data-name="Roble" data-mod="15000"></div>
+                    <div class="color-opt" style="background:#5D4037;" data-color="0x5D4037" data-name="Nogal" data-mod="25000"></div>
+                    <div class="color-opt" style="background:#DEB887;" data-color="0xDEB887" data-name="Pino" data-mod="0"></div>
+                </div>
+            </div>
+
+            <!-- Gadgets -->
+            <div class="section">
+                <div class="section-title">Extras tecnológicos</div>
+                <div class="gadget" data-gadget="usb" data-precio="12000">
+                    <div class="gadget-check">✓</div>
+                    <div class="gadget-info">
+                        <div class="gadget-name">USB-A + USB-C</div>
+                        <div class="gadget-desc">2 puertos de carga</div>
+                    </div>
+                    <div class="gadget-price">+$12.000</div>
+                </div>
+                <div class="gadget" data-gadget="wireless" data-precio="25000">
+                    <div class="gadget-check">✓</div>
+                    <div class="gadget-info">
+                        <div class="gadget-name">Carga inalámbrica</div>
+                        <div class="gadget-desc">Qi / MagSafe</div>
+                    </div>
+                    <div class="gadget-price">+$25.000</div>
+                </div>
+                <div class="gadget" data-gadget="led" data-precio="18000">
+                    <div class="gadget-check">✓</div>
+                    <div class="gadget-info">
+                        <div class="gadget-name">Luz LED táctil</div>
+                        <div class="gadget-desc">3 tonos de luz</div>
+                    </div>
+                    <div class="gadget-price">+$18.000</div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="summary">
+                <div class="summary-row">
+                    <span>Modelo base</span>
+                    <span id="sum-base">$89.000</span>
+                </div>
+                <div class="summary-row">
+                    <span>Material</span>
+                    <span id="sum-mat">+$0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Extras</span>
+                    <span id="sum-extras">$0</span>
+                </div>
+                <div class="summary-row total">
+                    <span class="label">Total</span>
+                    <span class="value" id="sum-total">$89.000</span>
+                </div>
+            </div>
+
+            <button class="cta-btn" onclick="cotizar()">
+                Cotizar por WhatsApp
+            </button>
+        </div>
+    </main>
+
+    <script>
+    // Complete catalog with all 44 models
+    const modelos = {
+        // SIMPLE
+        S01: { nombre: 'Cubo', desc: 'Forma cúbica pura con 1 cajón', precio: 75000, cajones: 1, categoria: 'simple', forma: 'cubo' },
+        S02: { nombre: 'Aire', desc: 'Flotante minimalista con cajón oculto', precio: 85000, cajones: 1, categoria: 'simple', forma: 'flotante' },
+        S03: { nombre: 'Torre', desc: 'Vertical con 3 cajones estrechos', precio: 95000, cajones: 3, categoria: 'simple', forma: 'torre' },
+        S04: { nombre: 'Plano', desc: 'Bajo y ancho, 2 cajones lado a lado', precio: 99000, cajones: 2, categoria: 'simple', forma: 'horizontal' },
+        S05: { nombre: 'Nicho', desc: 'Repisa abierta + 1 cajón inferior', precio: 79000, cajones: 1, categoria: 'simple', forma: 'nicho' },
+        S06: { nombre: 'Duo', desc: '2 cajones apilados, sin patas', precio: 85000, cajones: 2, categoria: 'simple', forma: 'standard' },
+        S07: { nombre: 'Zócalo', desc: 'Base corrida, 2 cajones', precio: 89000, cajones: 2, categoria: 'simple', forma: 'zocalo' },
+        S08: { nombre: 'Riel', desc: 'Flotante con riel metálico', precio: 92000, cajones: 1, categoria: 'simple', forma: 'flotante' },
+        S09: { nombre: 'Cero', desc: 'Sin tiradores, apertura push', precio: 95000, cajones: 2, categoria: 'simple', forma: 'standard' },
+        S10: { nombre: 'Mesa', desc: 'Forma de mesa con repisa', precio: 65000, cajones: 0, categoria: 'simple', forma: 'mesa' },
+        S11: { nombre: 'Doble Aire', desc: '2 módulos flotantes apilados', precio: 110000, cajones: 2, categoria: 'simple', forma: 'flotante' },
+        S12: { nombre: 'Escalón', desc: 'Asimétrico, 2 niveles', precio: 88000, cajones: 1, categoria: 'simple', forma: 'escalon' },
+
+        // CÁLIDO
+        C01: { nombre: 'Ratán', desc: 'Frentes de ratán tejido', precio: 99000, cajones: 2, categoria: 'calido', forma: 'standard' },
+        C02: { nombre: 'Nudo', desc: 'Madera con veta expuesta', precio: 120000, cajones: 1, categoria: 'calido', forma: 'standard' },
+        C03: { nombre: 'Cabaña', desc: 'Rústico con puerta', precio: 95000, cajones: 0, categoria: 'calido', forma: 'puerta' },
+        C04: { nombre: 'Trenza', desc: 'Detalle trenzado', precio: 89000, cajones: 1, categoria: 'calido', forma: 'standard' },
+        C05: { nombre: 'Orgánico', desc: 'Bordes redondeados', precio: 115000, cajones: 2, categoria: 'calido', forma: 'organico' },
+        C06: { nombre: 'Tronco', desc: 'Aspecto natural', precio: 135000, cajones: 1, categoria: 'calido', forma: 'cilindro' },
+        C07: { nombre: 'Canasto', desc: 'Con canasto de fibra', precio: 85000, cajones: 1, categoria: 'calido', forma: 'nicho' },
+        C08: { nombre: 'Bambú', desc: 'Estructura de bambú', precio: 92000, cajones: 2, categoria: 'calido', forma: 'standard' },
+        C09: { nombre: 'Terracota', desc: 'Madera + detalle cerámico', precio: 105000, cajones: 1, categoria: 'calido', forma: 'standard' },
+        C10: { nombre: 'Cuerda', desc: 'Tiradores de cuerda', precio: 88000, cajones: 2, categoria: 'calido', forma: 'standard' },
+
+        // MODERNO
+        M01: { nombre: 'Neo', desc: 'Líneas angulares, metal', precio: 110000, cajones: 2, categoria: 'moderno', forma: 'angular' },
+        M02: { nombre: 'Smart', desc: 'Diseñado para tech', precio: 140000, cajones: 2, categoria: 'moderno', forma: 'standard' },
+        M03: { nombre: 'Cristal', desc: 'Tapa de vidrio', precio: 125000, cajones: 1, categoria: 'moderno', forma: 'cristal' },
+        M04: { nombre: 'Acero', desc: 'Estructura metálica', precio: 115000, cajones: 2, categoria: 'moderno', forma: 'marco' },
+        M05: { nombre: 'LED', desc: 'Luz LED integrada', precio: 135000, cajones: 2, categoria: 'moderno', forma: 'standard' },
+        M06: { nombre: 'Seguro', desc: 'Cerradura biométrica', precio: 165000, cajones: 2, categoria: 'moderno', forma: 'standard' },
+        M07: { nombre: 'Cantilever', desc: 'Flotante en C', precio: 105000, cajones: 1, categoria: 'moderno', forma: 'cantilever' },
+        M08: { nombre: 'Hexágono', desc: 'Forma hexagonal', precio: 98000, cajones: 1, categoria: 'moderno', forma: 'hexagono' },
+        M09: { nombre: 'Espejo', desc: 'Frentes espejados', precio: 130000, cajones: 2, categoria: 'moderno', forma: 'standard' },
+        M10: { nombre: 'Curva', desc: 'Bordes curvos', precio: 118000, cajones: 2, categoria: 'moderno', forma: 'organico' },
+        M11: { nombre: 'Cilindro', desc: 'Forma cilíndrica', precio: 108000, cajones: 1, categoria: 'moderno', forma: 'cilindro' },
+        M12: { nombre: 'Marco', desc: 'Estructura tipo marco', precio: 112000, cajones: 1, categoria: 'moderno', forma: 'marco' },
+        M13: { nombre: 'Panel', desc: 'Panel estriado', precio: 105000, cajones: 2, categoria: 'moderno', forma: 'standard' },
+        M14: { nombre: 'Mármol', desc: 'Tapa efecto mármol', precio: 145000, cajones: 2, categoria: 'moderno', forma: 'cristal' },
+
+        // CLÁSICO
+        K01: { nombre: 'Colonial', desc: 'Molduras clásicas', precio: 125000, cajones: 2, categoria: 'clasico', forma: 'colonial' },
+        K02: { nombre: 'Retro', desc: 'Patas cónicas, años 60', precio: 115000, cajones: 2, categoria: 'clasico', forma: 'retro' },
+        K03: { nombre: 'Provenzal', desc: 'Patas torneadas', precio: 130000, cajones: 2, categoria: 'clasico', forma: 'provenzal' },
+        K04: { nombre: 'Inglés', desc: 'Estilo biblioteca', precio: 135000, cajones: 1, categoria: 'clasico', forma: 'ingles' },
+        K05: { nombre: 'Art Deco', desc: 'Geométrico dorado', precio: 140000, cajones: 2, categoria: 'clasico', forma: 'artdeco' },
+        K06: { nombre: 'Shaker', desc: 'Simplicidad tradicional', precio: 105000, cajones: 2, categoria: 'clasico', forma: 'standard' },
+        K07: { nombre: 'Viena', desc: 'Curvas estilo Thonet', precio: 118000, cajones: 1, categoria: 'clasico', forma: 'organico' },
+        K08: { nombre: 'Chippendale', desc: 'Patas cabriole', precio: 155000, cajones: 2, categoria: 'clasico', forma: 'chippendale' }
+    };
+
+    // Config
+    let config = {
+        modelo: 'S06',
+        nombre: 'Duo',
+        desc: '2 cajones apilados, sin patas',
+        precioBase: 85000,
+        ancho: 45,
+        prof: 40,
+        alto: 55,
+        color: 0xFAFAFA,
+        colorName: 'Blanco',
+        materialMod: -10000,
+        gadgets: [],
+        categoria: 'simple',
+        forma: 'standard'
+    };
+
+    // Load from URL
+    const params = new URLSearchParams(window.location.search);
+    const modeloId = params.get('modelo') || 'S06';
+    if (modelos[modeloId]) {
+        const m = modelos[modeloId];
+        config.modelo = modeloId;
+        config.nombre = m.nombre;
+        config.desc = m.desc;
+        config.precioBase = m.precio;
+        config.categoria = m.categoria;
+        config.forma = m.forma;
+    }
+
+    document.getElementById('nombre').textContent = config.nombre;
+    document.getElementById('desc').textContent = config.desc;
+
+    // Three.js
+    const canvas = document.getElementById('canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1f1f1f);
+
+    const camera = new THREE.PerspectiveCamera(40, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+    camera.position.set(1.8, 1.5, 1.8);
+    camera.lookAt(0, 0.35, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+    dir.position.set(3, 5, 4);
+    scene.add(dir);
+
+    scene.add(new THREE.GridHelper(2, 10, 0x333333, 0x282828));
+
+    let nightstand = new THREE.Group();
+    scene.add(nightstand);
+
+    function buildModel() {
+        while(nightstand.children.length) nightstand.remove(nightstand.children[0]);
+
+        const w = config.ancho / 100;
+        const d = config.prof / 100;
+        const h = config.alto / 100;
+        const cajones = modelos[config.modelo]?.cajones || 2;
+        const forma = config.forma;
+
+        const mat = new THREE.MeshStandardMaterial({
+            color: config.color,
+            roughness: 0.4,
+            metalness: 0.1
+        });
+
+        const darkMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
+        const metalMat = new THREE.MeshStandardMaterial({ color: 0x666666, roughness: 0.3, metalness: 0.7 });
+        const glassMat = new THREE.MeshStandardMaterial({ color: 0xaaddff, roughness: 0.1, metalness: 0.3, transparent: true, opacity: 0.4 });
+
+        // Build based on forma type
+        switch(forma) {
+            case 'flotante':
+                buildFlotante(w, d, h, mat, darkMat);
+                break;
+            case 'torre':
+                buildTorre(w, d, h, mat, darkMat);
+                break;
+            case 'horizontal':
+                buildHorizontal(w, d, h, mat, darkMat);
+                break;
+            case 'nicho':
+                buildNicho(w, d, h, mat, darkMat);
+                break;
+            case 'mesa':
+                buildMesa(w, d, h, mat, darkMat);
+                break;
+            case 'escalon':
+                buildEscalon(w, d, h, mat, darkMat);
+                break;
+            case 'zocalo':
+                buildZocalo(w, d, h, mat, darkMat);
+                break;
+            case 'cilindro':
+                buildCilindro(w, d, h, mat, darkMat);
+                break;
+            case 'hexagono':
+                buildHexagono(w, d, h, mat, darkMat);
+                break;
+            case 'angular':
+                buildAngular(w, d, h, mat, darkMat, metalMat);
+                break;
+            case 'marco':
+                buildMarco(w, d, h, mat, darkMat, metalMat);
+                break;
+            case 'cantilever':
+                buildCantilever(w, d, h, mat, darkMat, metalMat);
+                break;
+            case 'cristal':
+                buildCristal(w, d, h, mat, darkMat, glassMat);
+                break;
+            case 'organico':
+                buildOrganico(w, d, h, mat, darkMat);
+                break;
+            case 'colonial':
+                buildColonial(w, d, h, mat, darkMat);
+                break;
+            case 'retro':
+                buildRetro(w, d, h, mat, darkMat);
+                break;
+            case 'provenzal':
+                buildProvenzal(w, d, h, mat, darkMat);
+                break;
+            case 'chippendale':
+                buildChippendale(w, d, h, mat, darkMat);
+                break;
+            case 'artdeco':
+                buildArtDeco(w, d, h, mat, darkMat, metalMat);
+                break;
+            case 'ingles':
+                buildIngles(w, d, h, mat, darkMat);
+                break;
+            case 'puerta':
+                buildPuerta(w, d, h, mat, darkMat);
+                break;
+            case 'cubo':
+                buildCubo(w, d, h, mat, darkMat);
+                break;
+            default:
+                buildStandard(w, d, h, mat, darkMat, cajones);
+        }
+
+        // Add tech indicators
+        addTechIndicators(w, d, h, mat);
+    }
+
+    function buildStandard(w, d, h, mat, darkMat, cajones) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.85, d), mat);
+        body.position.y = h * 0.5;
+        nightstand.add(body);
+
+        const top = new THREE.Mesh(new THREE.BoxGeometry(w + 0.01, 0.015, d + 0.01), mat);
+        top.position.y = h * 0.93;
+        nightstand.add(top);
+
+        const legH = h * 0.1;
+        const legGeo = new THREE.BoxGeometry(0.025, legH, 0.025);
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(legGeo, mat);
+            leg.position.set(sx * (w/2 - 0.02), legH/2, sz * (d/2 - 0.02));
+            nightstand.add(leg);
+        });
+
+        const drawerH = (h * 0.72) / Math.max(cajones, 1);
+        for (let i = 0; i < cajones; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.92, drawerH * 0.85, 0.008), darkMat);
+            drawer.position.set(0, h * 0.15 + (i + 0.5) * drawerH, d/2 + 0.005);
+            nightstand.add(drawer);
+            const handle = new THREE.Mesh(new THREE.BoxGeometry(w * 0.2, 0.008, 0.012), darkMat);
+            handle.position.set(0, h * 0.15 + (i + 0.5) * drawerH, d/2 + 0.015);
+            nightstand.add(handle);
+        }
+    }
+
+    function buildFlotante(w, d, h, mat, darkMat) {
+        const bodyH = h * 0.4;
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, bodyH, d), mat);
+        body.position.y = h * 0.7;
+        nightstand.add(body);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.92, bodyH * 0.7, 0.008), darkMat);
+        drawer.position.set(0, h * 0.7, d/2 + 0.005);
+        nightstand.add(drawer);
+
+        // Wall mount indicator
+        const wallMount = new THREE.Mesh(new THREE.BoxGeometry(0.02, h * 0.5, 0.02), darkMat);
+        wallMount.position.set(0, h * 0.5, -d/2 - 0.02);
+        nightstand.add(wallMount);
+    }
+
+    function buildTorre(w, d, h, mat, darkMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w * 0.8, h, d * 0.9), mat);
+        body.position.y = h * 0.5;
+        nightstand.add(body);
+
+        for (let i = 0; i < 3; i++) {
+            const drawerH = h / 3.5;
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.72, drawerH * 0.8, 0.008), darkMat);
+            drawer.position.set(0, h * 0.15 + i * (h * 0.28), d * 0.45 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildHorizontal(w, d, h, mat, darkMat) {
+        const bodyH = h * 0.6;
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w * 1.3, bodyH, d), mat);
+        body.position.y = bodyH/2 + h * 0.15;
+        nightstand.add(body);
+
+        // Two side-by-side drawers
+        const drawerW = w * 0.55;
+        [-1, 1].forEach(side => {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(drawerW, bodyH * 0.7, 0.008), darkMat);
+            drawer.position.set(side * (w * 0.35), bodyH/2 + h * 0.15, d/2 + 0.005);
+            nightstand.add(drawer);
+        });
+
+        const legH = h * 0.15;
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.BoxGeometry(0.025, legH, 0.025), mat);
+            leg.position.set(sx * (w * 0.6), legH/2, sz * (d/2 - 0.02));
+            nightstand.add(leg);
+        });
+    }
+
+    function buildNicho(w, d, h, mat, darkMat) {
+        // Open shelf top + drawer bottom
+        const topShelf = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.45, d), mat);
+        topShelf.position.y = h * 0.75;
+        nightstand.add(topShelf);
+
+        const bottomBox = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.35, d), mat);
+        bottomBox.position.y = h * 0.25;
+        nightstand.add(bottomBox);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.9, h * 0.25, 0.008), darkMat);
+        drawer.position.set(0, h * 0.25, d/2 + 0.005);
+        nightstand.add(drawer);
+    }
+
+    function buildMesa(w, d, h, mat, darkMat) {
+        const top = new THREE.Mesh(new THREE.BoxGeometry(w, 0.02, d), mat);
+        top.position.y = h * 0.9;
+        nightstand.add(top);
+
+        const shelf = new THREE.Mesh(new THREE.BoxGeometry(w * 0.9, 0.015, d * 0.9), mat);
+        shelf.position.y = h * 0.35;
+        nightstand.add(shelf);
+
+        const legH = h * 0.88;
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, legH, 8), mat);
+            leg.position.set(sx * (w/2 - 0.03), legH/2 + 0.01, sz * (d/2 - 0.03));
+            nightstand.add(leg);
+        });
+    }
+
+    function buildEscalon(w, d, h, mat, darkMat) {
+        const leftBox = new THREE.Mesh(new THREE.BoxGeometry(w * 0.55, h * 0.6, d), mat);
+        leftBox.position.set(-w * 0.2, h * 0.3, 0);
+        nightstand.add(leftBox);
+
+        const rightBox = new THREE.Mesh(new THREE.BoxGeometry(w * 0.45, h * 0.85, d * 0.9), mat);
+        rightBox.position.set(w * 0.25, h * 0.425, 0);
+        nightstand.add(rightBox);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.45, h * 0.4, 0.008), darkMat);
+        drawer.position.set(-w * 0.2, h * 0.3, d/2 + 0.005);
+        nightstand.add(drawer);
+    }
+
+    function buildZocalo(w, d, h, mat, darkMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.8, d), mat);
+        body.position.y = h * 0.5;
+        nightstand.add(body);
+
+        // Plinth base
+        const plinth = new THREE.Mesh(new THREE.BoxGeometry(w + 0.01, h * 0.12, d + 0.01), mat);
+        plinth.position.y = h * 0.06;
+        nightstand.add(plinth);
+
+        const drawerH = h * 0.35;
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.9, drawerH * 0.85, 0.008), darkMat);
+            drawer.position.set(0, h * 0.2 + i * drawerH, d/2 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildCilindro(w, d, h, mat, darkMat) {
+        const radius = Math.min(w, d) / 2;
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, h * 0.9, 24), mat);
+        body.position.y = h * 0.45;
+        nightstand.add(body);
+
+        const drawerArc = new THREE.Mesh(new THREE.BoxGeometry(radius * 1.5, h * 0.3, 0.008), darkMat);
+        drawerArc.position.set(0, h * 0.45, radius + 0.005);
+        nightstand.add(drawerArc);
+    }
+
+    function buildHexagono(w, d, h, mat, darkMat) {
+        const hexShape = new THREE.Shape();
+        const size = Math.min(w, d) / 2;
+        for (let i = 0; i < 6; i++) {
+            const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+            const x = Math.cos(angle) * size;
+            const y = Math.sin(angle) * size;
+            if (i === 0) hexShape.moveTo(x, y);
+            else hexShape.lineTo(x, y);
+        }
+        hexShape.closePath();
+
+        const extrudeSettings = { depth: h * 0.8, bevelEnabled: false };
+        const hexGeo = new THREE.ExtrudeGeometry(hexShape, extrudeSettings);
+        hexGeo.rotateX(-Math.PI / 2);
+        const hex = new THREE.Mesh(hexGeo, mat);
+        hex.position.y = h * 0.1;
+        nightstand.add(hex);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.6, h * 0.3, 0.008), darkMat);
+        drawer.position.set(0, h * 0.5, size + 0.005);
+        nightstand.add(drawer);
+    }
+
+    function buildAngular(w, d, h, mat, darkMat, metalMat) {
+        // Trapezoid shape
+        const shape = new THREE.Shape();
+        const topW = w * 0.9;
+        const botW = w;
+        shape.moveTo(-botW/2, 0);
+        shape.lineTo(botW/2, 0);
+        shape.lineTo(topW/2, h * 0.85);
+        shape.lineTo(-topW/2, h * 0.85);
+        shape.closePath();
+
+        const extrudeSettings = { depth: d, bevelEnabled: false };
+        const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+        geo.translate(0, 0, -d/2);
+        const body = new THREE.Mesh(geo, mat);
+        nightstand.add(body);
+
+        // Metal legs
+        [[-1, -1], [1, -1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, h * 0.12, 8), metalMat);
+            leg.position.set(sx * (w/2 - 0.04), -h * 0.02, sz * (d/2 - 0.04));
+            nightstand.add(leg);
+        });
+
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.75, h * 0.3, 0.008), darkMat);
+            drawer.position.set(0, h * 0.25 + i * h * 0.35, d/2 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildMarco(w, d, h, mat, darkMat, metalMat) {
+        // Metal frame
+        const frameT = 0.02;
+        // Vertical posts
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const post = new THREE.Mesh(new THREE.BoxGeometry(frameT, h, frameT), metalMat);
+            post.position.set(sx * (w/2), h/2, sz * (d/2));
+            nightstand.add(post);
+        });
+        // Horizontal rails
+        [0, h].forEach(y => {
+            const rail1 = new THREE.Mesh(new THREE.BoxGeometry(w, frameT, frameT), metalMat);
+            rail1.position.set(0, y, d/2);
+            nightstand.add(rail1);
+            const rail2 = new THREE.Mesh(new THREE.BoxGeometry(w, frameT, frameT), metalMat);
+            rail2.position.set(0, y, -d/2);
+            nightstand.add(rail2);
+        });
+
+        // Inner box
+        const innerBox = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.6, d * 0.85), mat);
+        innerBox.position.y = h * 0.45;
+        nightstand.add(innerBox);
+    }
+
+    function buildCantilever(w, d, h, mat, darkMat, metalMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.35, d), mat);
+        body.position.y = h * 0.6;
+        nightstand.add(body);
+
+        // C-shaped support
+        const supportT = 0.025;
+        const cSupport = new THREE.Group();
+        const vert = new THREE.Mesh(new THREE.BoxGeometry(supportT, h * 0.7, supportT), metalMat);
+        vert.position.set(-w/2 - supportT, h * 0.35, 0);
+        cSupport.add(vert);
+        const horTop = new THREE.Mesh(new THREE.BoxGeometry(w * 0.2, supportT, supportT), metalMat);
+        horTop.position.set(-w/2 + w * 0.1 - supportT, h * 0.7, 0);
+        cSupport.add(horTop);
+        const horBot = new THREE.Mesh(new THREE.BoxGeometry(w * 0.3, supportT, d * 0.8), metalMat);
+        horBot.position.set(-w/2 + w * 0.15 - supportT, 0, 0);
+        cSupport.add(horBot);
+        nightstand.add(cSupport);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.2, 0.008), darkMat);
+        drawer.position.set(0, h * 0.6, d/2 + 0.005);
+        nightstand.add(drawer);
+    }
+
+    function buildCristal(w, d, h, mat, darkMat, glassMat) {
+        buildStandard(w, d, h, mat, darkMat, 2);
+
+        // Glass top
+        const glass = new THREE.Mesh(new THREE.BoxGeometry(w + 0.02, 0.01, d + 0.02), glassMat);
+        glass.position.y = h * 0.95;
+        nightstand.add(glass);
+    }
+
+    function buildOrganico(w, d, h, mat, darkMat) {
+        // Rounded box using capsule-like shape
+        const bodyGeo = new THREE.BoxGeometry(w, h * 0.75, d);
+        bodyGeo.translate(0, h * 0.45, 0);
+
+        // Add rounded corners simulation with spheres at corners
+        const body = new THREE.Mesh(bodyGeo, mat);
+        nightstand.add(body);
+
+        // Rounded legs
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.SphereGeometry(0.04, 16, 16), mat);
+            leg.scale.y = 2;
+            leg.position.set(sx * (w/2 - 0.04), 0.04, sz * (d/2 - 0.04));
+            nightstand.add(leg);
+        });
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.3, 0.008), darkMat);
+        drawer.position.set(0, h * 0.45, d/2 + 0.005);
+        nightstand.add(drawer);
+    }
+
+    function buildColonial(w, d, h, mat, darkMat) {
+        // Main body
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.7, d), mat);
+        body.position.y = h * 0.5;
+        nightstand.add(body);
+
+        // Crown molding
+        const crown = new THREE.Mesh(new THREE.BoxGeometry(w + 0.03, 0.03, d + 0.03), mat);
+        crown.position.y = h * 0.86;
+        nightstand.add(crown);
+
+        // Cabriole-style legs (simplified)
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const legGroup = new THREE.Group();
+            const upper = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.02, h * 0.12, 8), mat);
+            upper.position.y = h * 0.08;
+            legGroup.add(upper);
+            const foot = new THREE.Mesh(new THREE.SphereGeometry(0.025, 8, 8), mat);
+            foot.scale.y = 0.5;
+            foot.position.y = 0.01;
+            legGroup.add(foot);
+            legGroup.position.set(sx * (w/2 - 0.03), 0, sz * (d/2 - 0.03));
+            nightstand.add(legGroup);
+        });
+
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.28, 0.008), darkMat);
+            drawer.position.set(0, h * 0.3 + i * h * 0.32, d/2 + 0.005);
+            nightstand.add(drawer);
+            // Round handles
+            const handle = new THREE.Mesh(new THREE.TorusGeometry(0.015, 0.004, 8, 16), darkMat);
+            handle.rotation.x = Math.PI / 2;
+            handle.position.set(0, h * 0.3 + i * h * 0.32, d/2 + 0.02);
+            nightstand.add(handle);
+        }
+    }
+
+    function buildRetro(w, d, h, mat, darkMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.7, d), mat);
+        body.position.y = h * 0.55;
+        nightstand.add(body);
+
+        // Tapered legs (conical)
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.02, h * 0.25, 8), mat);
+            leg.position.set(sx * (w/2 - 0.04), h * 0.1, sz * (d/2 - 0.04));
+            leg.rotation.x = sx * sz * 0.1; // slight angle
+            nightstand.add(leg);
+        });
+
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.88, h * 0.28, 0.008), darkMat);
+            drawer.position.set(0, h * 0.4 + i * h * 0.3, d/2 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildProvenzal(w, d, h, mat, darkMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.65, d), mat);
+        body.position.y = h * 0.55;
+        nightstand.add(body);
+
+        // Turned legs
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const legGroup = new THREE.Group();
+            // Multiple spheres stacked for turned look
+            for (let j = 0; j < 3; j++) {
+                const ball = new THREE.Mesh(new THREE.SphereGeometry(0.018 - j * 0.003, 8, 8), mat);
+                ball.position.y = j * 0.06;
+                legGroup.add(ball);
+            }
+            const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.015, h * 0.15, 8), mat);
+            shaft.position.y = h * 0.1;
+            legGroup.add(shaft);
+            legGroup.position.set(sx * (w/2 - 0.03), 0.01, sz * (d/2 - 0.03));
+            nightstand.add(legGroup);
+        });
+
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.25, 0.008), darkMat);
+            drawer.position.set(0, h * 0.38 + i * h * 0.28, d/2 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildChippendale(w, d, h, mat, darkMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.6, d), mat);
+        body.position.y = h * 0.55;
+        nightstand.add(body);
+
+        // Cabriole legs (S-curve approximation)
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const curve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(0, 0, 0),
+                new THREE.Vector3(sx * 0.02, h * 0.08, sz * 0.02),
+                new THREE.Vector3(sx * -0.01, h * 0.15, sz * -0.01),
+                new THREE.Vector3(0, h * 0.22, 0)
+            ]);
+            const tubeGeo = new THREE.TubeGeometry(curve, 12, 0.015, 8, false);
+            const leg = new THREE.Mesh(tubeGeo, mat);
+            leg.position.set(sx * (w/2 - 0.03), 0, sz * (d/2 - 0.03));
+            nightstand.add(leg);
+
+            // Ball foot
+            const foot = new THREE.Mesh(new THREE.SphereGeometry(0.02, 8, 8), mat);
+            foot.position.set(sx * (w/2 - 0.03), 0.015, sz * (d/2 - 0.03));
+            nightstand.add(foot);
+        });
+
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.22, 0.008), darkMat);
+            drawer.position.set(0, h * 0.38 + i * h * 0.24, d/2 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildArtDeco(w, d, h, mat, darkMat, metalMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.8, d), mat);
+        body.position.y = h * 0.5;
+        nightstand.add(body);
+
+        // Stepped top
+        const step1 = new THREE.Mesh(new THREE.BoxGeometry(w * 0.95, 0.02, d * 0.95), mat);
+        step1.position.y = h * 0.91;
+        nightstand.add(step1);
+        const step2 = new THREE.Mesh(new THREE.BoxGeometry(w * 0.88, 0.02, d * 0.88), mat);
+        step2.position.y = h * 0.95;
+        nightstand.add(step2);
+
+        // Gold accents
+        const accent1 = new THREE.Mesh(new THREE.BoxGeometry(0.008, h * 0.6, 0.008), metalMat);
+        accent1.position.set(-w/2 + 0.03, h * 0.5, d/2 + 0.005);
+        nightstand.add(accent1);
+        const accent2 = new THREE.Mesh(new THREE.BoxGeometry(0.008, h * 0.6, 0.008), metalMat);
+        accent2.position.set(w/2 - 0.03, h * 0.5, d/2 + 0.005);
+        nightstand.add(accent2);
+
+        for (let i = 0; i < 2; i++) {
+            const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.8, h * 0.3, 0.008), darkMat);
+            drawer.position.set(0, h * 0.25 + i * h * 0.35, d/2 + 0.005);
+            nightstand.add(drawer);
+        }
+    }
+
+    function buildIngles(w, d, h, mat, darkMat) {
+        // Taller with gallery
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.75, d), mat);
+        body.position.y = h * 0.45;
+        nightstand.add(body);
+
+        // Gallery rail
+        const railH = h * 0.08;
+        [[-1, 0], [1, 0], [0, -1]].forEach(([sx, sz]) => {
+            const rail = new THREE.Mesh(new THREE.BoxGeometry(
+                sz === 0 ? 0.008 : w * 0.9,
+                railH,
+                sx === 0 ? 0.008 : d * 0.9
+            ), mat);
+            rail.position.set(sx * (w/2 - 0.02), h * 0.87, sz * (d/2 - 0.02));
+            nightstand.add(rail);
+        });
+
+        // Open shelf + drawer
+        const shelf = new THREE.Mesh(new THREE.BoxGeometry(w * 0.9, 0.01, d * 0.9), mat);
+        shelf.position.y = h * 0.55;
+        nightstand.add(shelf);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(w * 0.85, h * 0.3, 0.008), darkMat);
+        drawer.position.set(0, h * 0.3, d/2 + 0.005);
+        nightstand.add(drawer);
+    }
+
+    function buildPuerta(w, d, h, mat, darkMat) {
+        const body = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.85, d), mat);
+        body.position.y = h * 0.5;
+        nightstand.add(body);
+
+        // Door instead of drawer
+        const door = new THREE.Mesh(new THREE.BoxGeometry(w * 0.9, h * 0.65, 0.015), darkMat);
+        door.position.set(0, h * 0.45, d/2 + 0.008);
+        nightstand.add(door);
+
+        // Door handle
+        const handle = new THREE.Mesh(new THREE.SphereGeometry(0.015, 8, 8), darkMat);
+        handle.position.set(w * 0.35, h * 0.45, d/2 + 0.025);
+        nightstand.add(handle);
+
+        const legH = h * 0.1;
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.BoxGeometry(0.025, legH, 0.025), mat);
+            leg.position.set(sx * (w/2 - 0.02), legH/2, sz * (d/2 - 0.02));
+            nightstand.add(leg);
+        });
+    }
+
+    function buildCubo(w, d, h, mat, darkMat) {
+        // Simple cube with one drawer
+        const size = Math.min(w, d, h * 0.8);
+        const body = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), mat);
+        body.position.y = size/2 + h * 0.1;
+        nightstand.add(body);
+
+        const drawer = new THREE.Mesh(new THREE.BoxGeometry(size * 0.85, size * 0.75, 0.008), darkMat);
+        drawer.position.set(0, size/2 + h * 0.1, size/2 + 0.005);
+        nightstand.add(drawer);
+
+        const legH = h * 0.1;
+        [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
+            const leg = new THREE.Mesh(new THREE.BoxGeometry(0.03, legH, 0.03), mat);
+            leg.position.set(sx * (size/2 - 0.02), legH/2, sz * (size/2 - 0.02));
+            nightstand.add(leg);
+        });
+    }
+
+    function addTechIndicators(w, d, h, mat) {
+        // Wireless charger indicator
+        if (config.gadgets.includes('wireless')) {
+            const charger = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.035, 0.035, 0.004, 16),
+                new THREE.MeshStandardMaterial({ color: 0x222222 })
+            );
+            charger.position.set(0, h * 0.96, 0);
+            nightstand.add(charger);
+        }
+
+        // LED indicator
+        if (config.gadgets.includes('led')) {
+            const led = new THREE.Mesh(
+                new THREE.BoxGeometry(w * 0.8, 0.005, 0.005),
+                new THREE.MeshBasicMaterial({ color: 0xF5A623 })
+            );
+            led.position.set(0, h * 0.08, d/2 + 0.003);
+            nightstand.add(led);
+        }
+
+        // USB indicator
+        if (config.gadgets.includes('usb')) {
+            const usb = new THREE.Mesh(
+                new THREE.BoxGeometry(0.025, 0.01, 0.01),
+                new THREE.MeshStandardMaterial({ color: 0x222222 })
+            );
+            usb.position.set(w * 0.35, h * 0.15, d/2 + 0.006);
+            nightstand.add(usb);
+        }
+    }
+
+    buildModel();
+
+    // Mouse drag
+    let dragging = false;
+    canvas.onmousedown = () => dragging = true;
+    canvas.onmouseup = () => dragging = false;
+    canvas.onmouseleave = () => dragging = false;
+    canvas.onmousemove = e => {
+        if (dragging) nightstand.rotation.y += e.movementX * 0.01;
+    };
+
+    // Touch support
+    let lastTouchX = 0;
+    canvas.ontouchstart = e => {
+        lastTouchX = e.touches[0].clientX;
+        dragging = true;
+    };
+    canvas.ontouchend = () => dragging = false;
+    canvas.ontouchmove = e => {
+        if (dragging && e.touches.length === 1) {
+            const deltaX = e.touches[0].clientX - lastTouchX;
+            nightstand.rotation.y += deltaX * 0.01;
+            lastTouchX = e.touches[0].clientX;
+        }
+    };
+
+    // Animation
+    (function animate() {
+        requestAnimationFrame(animate);
+        if (!dragging) nightstand.rotation.y += 0.003;
+        renderer.render(scene, camera);
+    })();
+
+    // Resize
+    window.onresize = () => {
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    };
+
+    // Sliders
+    ['ancho', 'prof', 'alto'].forEach(dim => {
+        const slider = document.getElementById('s-' + dim);
+        const value = document.getElementById('v-' + dim);
+        slider.oninput = () => {
+            config[dim] = parseInt(slider.value);
+            value.textContent = slider.value + ' cm';
+            buildModel();
+        };
+    });
+
+    // Colors
+    document.querySelectorAll('.color-opt').forEach(opt => {
+        opt.onclick = () => {
+            document.querySelectorAll('.color-opt').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+            config.color = parseInt(opt.dataset.color);
+            config.colorName = opt.dataset.name;
+            config.materialMod = parseInt(opt.dataset.mod);
+            buildModel();
+            updateSummary();
+        };
+    });
+
+    // Gadgets
+    document.querySelectorAll('.gadget').forEach(g => {
+        g.onclick = () => {
+            g.classList.toggle('active');
+            const gadget = g.dataset.gadget;
+            if (g.classList.contains('active')) {
+                config.gadgets.push(gadget);
+            } else {
+                config.gadgets = config.gadgets.filter(x => x !== gadget);
+            }
+            buildModel();
+            updateSummary();
+        };
+    });
+
+    // Summary
+    function updateSummary() {
+        const extrasTotal = config.gadgets.reduce((sum, g) => {
+            const el = document.querySelector(`[data-gadget="${g}"]`);
+            return sum + parseInt(el?.dataset.precio || 0);
+        }, 0);
+
+        const total = config.precioBase + config.materialMod + extrasTotal;
+
+        document.getElementById('sum-base').textContent = '$' + config.precioBase.toLocaleString('es-CL');
+        document.getElementById('sum-mat').textContent = (config.materialMod >= 0 ? '+' : '') + '$' + config.materialMod.toLocaleString('es-CL');
+        document.getElementById('sum-extras').textContent = '+$' + extrasTotal.toLocaleString('es-CL');
+        document.getElementById('sum-total').textContent = '$' + total.toLocaleString('es-CL');
+    }
+
+    updateSummary();
+
+    // WhatsApp
+    const WHATSAPP_NUMBER = '56966172583';
+
+    function cotizar() {
+        const total = config.precioBase + config.materialMod + config.gadgets.reduce((sum, g) => {
+            const el = document.querySelector(`[data-gadget="${g}"]`);
+            return sum + parseInt(el?.dataset.precio || 0);
+        }, 0);
+
+        const extras = config.gadgets.length ? config.gadgets.join(', ') : 'ninguno';
+        const msg = `Hola! Me interesa el velador *${config.nombre}*:\n` +
+            `- Medidas: ${config.ancho}x${config.prof}x${config.alto} cm\n` +
+            `- Color: ${config.colorName}\n` +
+            `- Extras: ${extras}\n` +
+            `- Total: $${total.toLocaleString('es-CL')}\n\n` +
+            `¿Está disponible?`;
+
+        window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+    }
+    </script>
+
+</body>
+</html>

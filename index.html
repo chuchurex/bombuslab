@@ -13,37 +13,68 @@
 <body>
 
     <header>
+        <a href="index.html" class="logo">
+            <img src="assets/images/bombus_final_inverted_honey.png" alt="Bombus Isotype">
+            <span>BOMBUS</span>
+        </a>
         <nav>
             <a href="bombus_galeria.html" class="nav-link">Catálogo</a>
             <a href="bombus_configurador.html" class="nav-link">Configurador</a>
             <a href="https://wa.me/56966172583" class="nav-link">Contacto</a>
         </nav>
-        <a href="index.html" class="logo">
-            <img src="assets/images/bombus_final_inverted_honey.png" alt="Bombus Isotype">
-            <span>BOMBUS</span>
-        </a>
     </header>
 
     <main class="accordion-container">
-
-        <!-- SIMPLE -->
-        <a href="bombus_galeria.html?cat=simple" class="column">
+        
+        <!-- SECTION 1: SIMPLE -->
+        <article class="column" id="simple">
             <svg class="col-illustration" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="20" y="25" width="40" height="35" rx="2" />
-                <rect x="24" y="30" width="32" height="12" rx="1" />
-                <line x1="38" y1="36" x2="42" y2="36" stroke-width="2"/>
-                <line x1="24" y1="60" x2="22" y2="68" />
-                <line x1="56" y1="60" x2="58" y2="68" />
+                <rect x="25" y="25" width="30" height="30" rx="1" />
+                <rect x="28" y="28" width="24" height="10" />
+                <line x1="28" y1="55" x2="25" y2="65" />
+                <line x1="52" y1="55" x2="55" y2="65" />
             </svg>
             <h2 class="col-title">Simple</h2>
             <div class="col-content">
-                <p class="col-desc">Minimalismo puro. Líneas limpias, sin excesos.</p>
-                <span class="col-count">12 diseños</span>
+                <p class="col-desc">Minimalismo puro. Un cajón, líneas rectas.</p>
+                <a href="bombus_galeria.html?cat=simple" class="btn-explore">Explorar &rarr;</a>
             </div>
-        </a>
+        </article>
 
-        <!-- CÁLIDO -->
-        <a href="bombus_galeria.html?cat=calido" class="column">
+        <!-- SECTION 2: CLASICO -->
+        <article class="column" id="classic">
+            <svg class="col-illustration" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round">
+               <rect x="20" y="20" width="40" height="40" rx="2" />
+               <rect x="25" y="25" width="30" height="12" rx="1" />
+               <rect x="25" y="42" width="30" height="12" rx="1" />
+               <path d="M22 60 Q20 70 18 70" />
+               <path d="M58 60 Q60 70 62 70" />
+            </svg>
+            <h2 class="col-title">Clásico</h2>
+            <div class="col-content">
+                <p class="col-desc">Elegancia tradicional. Detalles que perduran.</p>
+                <a href="bombus_galeria.html?cat=clasico" class="btn-explore">Explorar &rarr;</a>
+            </div>
+        </article>
+
+        <!-- SECTION 3: MODERNO -->
+        <article class="column" id="modern">
+            <svg class="col-illustration" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 30 L65 30 L60 60 L20 60 Z" />
+                <rect x="25" y="35" width="30" height="10" />
+                <line x1="20" y1="60" x2="15" y2="75" />
+                <line x1="60" y1="60" x2="65" y2="75" />
+                <circle cx="40" cy="25" r="2" fill="currentColor" stroke="none"/>
+            </svg>
+            <h2 class="col-title">Moderno</h2>
+            <div class="col-content">
+                <p class="col-desc">Vanguardia tech. Conexión y diseño.</p>
+                <a href="bombus_galeria.html?cat=moderno" class="btn-explore">Explorar &rarr;</a>
+            </div>
+        </article>
+
+        <!-- SECTION 4: CÁLIDO -->
+        <article class="column" id="calido">
             <svg class="col-illustration" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="18" y="20" width="44" height="45" rx="3" />
                 <rect x="23" y="26" width="34" height="14" rx="1" />
@@ -55,45 +86,9 @@
             <h2 class="col-title">Cálido</h2>
             <div class="col-content">
                 <p class="col-desc">Ratán, madera noble y texturas naturales.</p>
-                <span class="col-count">10 diseños</span>
+                <a href="bombus_galeria.html?cat=calido" class="btn-explore">Explorar &rarr;</a>
             </div>
-        </a>
-
-        <!-- MODERNO -->
-        <a href="bombus_galeria.html?cat=moderno" class="column">
-            <svg class="col-illustration" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="40,12 62,24 62,48 40,60 18,48 18,24"/>
-                <rect x="26" y="30" width="28" height="14" rx="1" />
-                <line x1="38" y1="37" x2="42" y2="37" stroke-width="2"/>
-                <circle cx="40" cy="18" r="2" fill="currentColor" stroke="none"/>
-                <line x1="18" y1="60" x2="14" y2="72" />
-                <line x1="62" y1="60" x2="66" y2="72" />
-            </svg>
-            <h2 class="col-title">Moderno</h2>
-            <div class="col-content">
-                <p class="col-desc">Vanguardia tech. USB, LED y carga inalámbrica.</p>
-                <span class="col-count">14 diseños</span>
-            </div>
-        </a>
-
-        <!-- CLÁSICO -->
-        <a href="bombus_galeria.html?cat=clasico" class="column">
-            <svg class="col-illustration" viewBox="0 0 80 80" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="18" y="18" width="44" height="36" rx="2" />
-                <rect x="15" y="14" width="50" height="6" rx="1" />
-                <rect x="23" y="24" width="34" height="12" rx="1" />
-                <rect x="23" y="40" width="34" height="10" rx="1" />
-                <circle cx="40" cy="30" r="2"/>
-                <circle cx="40" cy="45" r="2"/>
-                <path d="M22 54 Q18 60 22 66 Q26 72 22 76" stroke-width="2"/>
-                <path d="M58 54 Q62 60 58 66 Q54 72 58 76" stroke-width="2"/>
-            </svg>
-            <h2 class="col-title">Clásico</h2>
-            <div class="col-content">
-                <p class="col-desc">Elegancia tradicional. Detalles que perduran.</p>
-                <span class="col-count">8 diseños</span>
-            </div>
-        </a>
+        </article>
 
     </main>
 

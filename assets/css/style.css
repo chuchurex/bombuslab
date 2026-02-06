@@ -35,11 +35,11 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 2rem;
-    pointer-events: none;
+    pointer-events: none; /* Let clicks pass through to columns largely */
 }
 
 header * {
-    pointer-events: auto;
+    pointer-events: auto; /* Re-enable pointer events for actual buttons */
 }
 
 .logo {
@@ -89,7 +89,7 @@ nav {
     overflow: hidden;
 }
 
-/* Individual Columns - Now as <a> tags */
+/* Individual Columns */
 .column {
     position: relative;
     flex: 1;
@@ -101,8 +101,6 @@ nav {
     transition: flex var(--anim-speed) var(--anim-ease), background-color 0.3s;
     cursor: pointer;
     overflow: hidden;
-    text-decoration: none;
-    color: var(--color-text);
 }
 
 .column:last-child {
@@ -110,8 +108,8 @@ nav {
 }
 
 .column:hover {
-    flex: 3;
-    background-color: rgba(255, 255, 255, 0.03);
+    flex: 3; /* Expand on hover */
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
 .column:hover .col-content {
@@ -124,7 +122,7 @@ nav {
 }
 
 .column:hover .col-illustration {
-    transform: scale(1.15);
+    transform: scale(1.1);
     stroke: var(--color-accent);
 }
 
@@ -133,15 +131,15 @@ nav {
     width: 120px;
     height: 120px;
     margin-bottom: 2rem;
-    transition: transform var(--anim-speed) var(--anim-ease), stroke 0.3s;
-    stroke: var(--color-text);
+    transition: transform var(--anim-speed), stroke 0.3s;
+    stroke: var(--color-text); /* Default stroke */
     stroke-width: 1.5;
     fill: none;
 }
 
 .col-title {
     font-family: var(--font-serif);
-    font-size: 3rem;
+    font-size: 3rem; /* Large vertical styling logic usually needs writing-mode if very narrow, but here we assume standard */
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(180deg);
@@ -150,33 +148,48 @@ nav {
     transition: color 0.3s;
 }
 
+.column:hover .col-title {
+    /* When expanded, maybe rotate back? Keeping it vertical is stylish, let's keep vertical for now or adjust based on width logic if intended */
+}
+
 /* Hidden content that reveals on expand */
 .col-content {
     position: absolute;
     bottom: 15%;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.4s 0.15s, transform 0.4s 0.15s;
+    transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
     text-align: center;
     width: 80%;
-    max-width: 280px;
 }
 
 .col-desc {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--color-text-muted);
-    line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.col-count {
+.btn-explore {
     display: inline-block;
-    font-size: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--color-accent);
     color: var(--color-accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    opacity: 0.9;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
 }
+
+.btn-explore:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+}
+
+/* Desktop Horizontal Title Adjustment */
+/* If the column is expanded, we might want the text horizontal. 
+   css 'has' or js handles this better, but let's stick to pure css simple approach first.
+   vertical text is iconic for these accordions. */
 
 /* Mobile Layout */
 @media (max-width: 768px) {
@@ -188,8 +201,8 @@ nav {
 
     .column {
         flex: none;
-        height: 25vh;
-        min-height: 180px;
+        height: 25vh; /* 4 items = 100vh total */
+        min-height: 200px;
         width: 100%;
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -197,20 +210,15 @@ nav {
         justify-content: flex-start;
         padding: 0 2rem;
     }
-
+    
     .column:hover {
-        flex: none;
-        background-color: rgba(255, 255, 255, 0.03);
-    }
-
-    .column:hover .col-illustration {
-        transform: scale(1.05);
+        flex: none; /* No expansion on mobile, just links */
     }
 
     .col-title {
         writing-mode: horizontal-tb;
         transform: none;
-        font-size: 1.75rem;
+        font-size: 2rem;
         order: 2;
     }
 
@@ -229,50 +237,19 @@ nav {
         width: auto;
         margin-left: auto;
         order: 3;
-        text-align: right;
     }
-
-    .col-desc {
-        display: none;
+    
+    .col-desc { display: none; } /* Hide desc on mobile list view for cleanliness */
+    
+    .btn-explore {
+        padding: 0.5rem;
+        border: none;
+        font-size: 1.5rem; /* Arrow icon size */
     }
-
-    .col-count {
-        font-size: 0.7rem;
-    }
-
+    
     header {
         position: sticky;
         background: rgba(26, 26, 26, 0.95);
         backdrop-filter: blur(10px);
-    }
-
-    nav {
-        gap: 1rem;
-    }
-
-    .nav-link {
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 1rem;
-    }
-
-    .logo span {
-        display: none;
-    }
-
-    .logo img {
-        height: 32px;
-    }
-
-    .column {
-        padding: 0 1.5rem;
-    }
-
-    .col-title {
-        font-size: 1.5rem;
     }
 }

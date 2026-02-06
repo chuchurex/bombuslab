@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,101 +8,143 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --honey: #F5A623;
+            /* Palette from style.css */
+            --color-bg: #1A1A1A;
+            --color-text: #FFFFFF;
+            --color-text-muted: rgba(255, 255, 255, 0.6);
+            --color-accent: #F5A623;
             --honey-dark: #C4841D;
-            --charcoal: #1A1A1A;
-            --warm-gray: #F7F5F2;
-            --cream: #FFFEF9;
-            --text-primary: #2D2D2D;
-            --text-secondary: #6B6B6B;
-            --border: #E8E4DE;
+
+            /* Legacy variables mapped to new palette */
+            --honey: var(--color-accent);
+            --charcoal: var(--color-bg);
+            --warm-gray: rgba(255, 255, 255, 0.05);
+            /* Card backgrounds */
+            --cream: var(--color-bg);
+            --text-primary: var(--color-text);
+            --text-secondary: var(--color-text-muted);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--cream);
-            color: var(--text-primary);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
         }
 
-        /* Header */
+        /* Shared Header Styles from style.css */
         header {
-            background: var(--charcoal);
-            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 1.5rem 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             text-decoration: none;
+            color: var(--color-text);
         }
 
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--honey);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
-        .logo-icon svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .logo-text {
+        .logo span {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
             font-weight: 700;
-            color: white;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: opacity 0.3s, color 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--color-accent);
         }
 
         /* Filters */
         .filters {
-            background: white;
+            background: transparent;
             padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: none;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.8rem;
             overflow-x: auto;
+            margin-top: 80px;
+            /* Space for fixed header */
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--warm-gray);
-            border: none;
-            border-radius: 20px;
+            padding: 0.5rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
             font-family: inherit;
             font-size: 0.9rem;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            color: var(--color-text-muted);
         }
 
-        .filter-btn:hover { background: #e8e4de; }
-        .filter-btn.active { background: var(--charcoal); color: white; }
+        .filter-btn:hover {
+            border-color: var(--color-accent);
+            color: var(--color-text);
+        }
+
+        .filter-btn.active {
+            background: transparent;
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
 
         .filter-divider {
             width: 1px;
             background: var(--border);
             margin: 0 0.5rem;
+            height: 20px;
+            align-self: center;
         }
 
         /* Gallery */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
@@ -109,82 +152,113 @@
 
         /* Product Card */
         .product {
-            background: white;
-            border-radius: 12px;
+            background: #252525;
+            border-radius: 1px;
+            /* Sharper corners like landing */
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .product:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--color-accent);
         }
 
         .product-img {
             aspect-ratio: 1;
-            background: var(--warm-gray);
+            background: rgba(255, 255, 255, 0.02);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 2rem;
+            padding: 2.5rem;
+            transition: background 0.3s;
+        }
+
+        .product:hover .product-img {
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .product-img svg {
             width: 100%;
             height: 100%;
-            max-width: 140px;
-            max-height: 140px;
+            max-width: 160px;
+            max-height: 160px;
+            stroke: rgba(255, 255, 255, 0.8);
+            /* Force lighter stroke */
+            transition: stroke 0.3s;
+        }
+
+        .product:hover .product-img svg {
+            stroke: var(--color-text);
         }
 
         .product-badge {
             position: absolute;
-            top: 0.75rem;
-            left: 0.75rem;
-            background: var(--charcoal);
-            color: white;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
             padding: 0.25rem 0.6rem;
-            border-radius: 12px;
+            border-radius: 4px;
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(4px);
         }
 
-        .product-badge.flotante { background: #1976D2; }
-        .product-badge.smart { background: var(--honey-dark); }
+        .product-badge.flotante {
+            background: rgba(25, 118, 210, 0.3);
+            color: #90CAF9;
+        }
+
+        .product-badge.smart {
+            background: rgba(245, 166, 35, 0.2);
+            color: #F5A623;
+        }
 
         .product-info {
-            padding: 1rem;
+            padding: 1.5rem;
         }
 
         .product-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
         }
 
         .product-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
 
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
         }
 
         .product-price {
-            font-weight: 600;
-            color: var(--honey-dark);
+            font-weight: 700;
+            color: var(--color-accent);
+            font-size: 1.1rem;
         }
 
         .product-specs {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* Empty state */
@@ -192,32 +266,63 @@
             grid-column: 1 / -1;
             text-align: center;
             padding: 4rem 2rem;
-            color: var(--text-secondary);
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
         }
 
         /* Results count */
         .results-count {
-            padding: 1rem 2rem 0;
+            padding: 0 2rem;
             max-width: 1400px;
-            margin: 0 auto;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+            margin: 1rem auto 0;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            text-align: center;
+            letter-spacing: 0.05em;
         }
 
-        /* Category colors */
-        .product[data-cat="simple"] .product-img { background: #f8f9fa; }
-        .product[data-cat="calido"] .product-img { background: #fff8e7; }
-        .product[data-cat="moderno"] .product-img { background: #eceff1; }
-        .product[data-cat="clasico"] .product-img { background: #faf5f0; }
+        /* Category colors overrides - disable or mute them for dark mode consistency */
+        .product[data-cat="simple"] .product-img {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .product[data-cat="calido"] .product-img {
+            background: rgba(141, 110, 99, 0.05);
+        }
+
+        .product[data-cat="moderno"] .product-img {
+            background: rgba(55, 71, 79, 0.1);
+        }
+
+        .product[data-cat="clasico"] .product-img {
+            background: rgba(93, 64, 55, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                justify-content: flex-start;
+                padding: 1rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <header>
         <a href="index.html" class="logo">
-            <img src="assets/images/bombus_final_inverted_honey.png" alt="Bombus" style="height:32px;width:auto;">
-            <span class="logo-text">BOMBUS</span>
+            <img src="assets/images/bombus_final_inverted_honey.png" alt="Bombus Isotype">
+            <span>BOMBUS</span>
         </a>
+        <nav>
+            <a href="bombus_galeria.html" class="nav-link" style="color:var(--color-accent); opacity:1;">Catálogo</a>
+            <a href="bombus_configurador.html" class="nav-link">Configurador</a>
+            <a href="https://wa.me/56966172583" class="nav-link">Contacto</a>
+        </nav>
     </header>
 
     <div class="filters">
@@ -236,24 +341,24 @@
     <div class="gallery" id="gallery"></div>
 
     <script>
-    // SVG icons for each model type
-    const svgIcons = {
-        // SIMPLE
-        S01: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+        // SVG icons for each model type
+        const svgIcons = {
+            // SIMPLE
+            S01: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="15" y="25" width="50" height="45" rx="2"/>
             <rect x="20" y="32" width="40" height="32" rx="1"/>
             <line x1="38" y1="48" x2="42" y2="48" stroke-width="3" stroke-linecap="round"/>
             <rect x="12" y="70" width="8" height="6" rx="1"/>
             <rect x="60" y="70" width="8" height="6" rx="1"/>
         </svg>`,
-        S02: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S02: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="10" y="30" width="60" height="20" rx="2"/>
             <rect x="15" y="35" width="50" height="10" rx="1"/>
             <line x1="38" y1="40" x2="42" y2="40" stroke-width="3" stroke-linecap="round"/>
             <path d="M5 50 L5 30" stroke-dasharray="4 2"/>
             <path d="M75 50 L75 30" stroke-dasharray="4 2"/>
         </svg>`,
-        S03: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S03: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="20" y="10" width="40" height="60" rx="2"/>
             <rect x="25" y="15" width="30" height="15" rx="1"/>
             <rect x="25" y="35" width="30" height="15" rx="1"/>
@@ -262,27 +367,27 @@
             <line x1="38" y1="42" x2="42" y2="42" stroke-width="2" stroke-linecap="round"/>
             <line x1="38" y1="60" x2="42" y2="60" stroke-width="2" stroke-linecap="round"/>
         </svg>`,
-        S04: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S04: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="10" y="40" width="60" height="30" rx="2"/>
             <rect x="15" y="46" width="25" height="18" rx="1"/>
             <rect x="42" y="46" width="25" height="18" rx="1"/>
             <line x1="26" y1="55" x2="30" y2="55" stroke-width="3" stroke-linecap="round"/>
             <line x1="52" y1="55" x2="56" y2="55" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        S05: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S05: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="15" y="15" width="50" height="55" rx="2"/>
             <rect x="20" y="20" width="40" height="25" rx="1" stroke-dasharray="4 2"/>
             <rect x="20" y="50" width="40" height="15" rx="1"/>
             <line x1="38" y1="57" x2="42" y2="57" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        S06: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S06: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="20" y="26" width="40" height="18" rx="1"/>
             <rect x="20" y="48" width="40" height="18" rx="1"/>
             <line x1="38" y1="35" x2="42" y2="35" stroke-width="3" stroke-linecap="round"/>
             <line x1="38" y1="57" x2="42" y2="57" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        S07: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S07: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="12" y="20" width="56" height="55" rx="2"/>
             <rect x="12" y="65" width="56" height="10" rx="1"/>
             <rect x="18" y="26" width="44" height="16" rx="1"/>
@@ -290,7 +395,7 @@
             <line x1="38" y1="34" x2="42" y2="34" stroke-width="3" stroke-linecap="round"/>
             <line x1="38" y1="54" x2="42" y2="54" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        S08: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S08: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="10" y="35" width="60" height="18" rx="2"/>
             <rect x="15" y="40" width="50" height="8" rx="1"/>
             <line x1="38" y1="44" x2="42" y2="44" stroke-width="3" stroke-linecap="round"/>
@@ -298,20 +403,20 @@
             <path d="M5 57 L5 65" stroke-width="2"/>
             <path d="M75 57 L75 65" stroke-width="2"/>
         </svg>`,
-        S09: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S09: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="18" y="24" width="44" height="20" rx="1"/>
             <rect x="18" y="48" width="44" height="20" rx="1"/>
             <circle cx="40" cy="34" r="2" fill="#607D8B"/>
             <circle cx="40" cy="58" r="2" fill="#607D8B"/>
         </svg>`,
-        S10: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S10: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="10" y="20" width="60" height="8" rx="1"/>
             <line x1="18" y1="28" x2="18" y2="70" stroke-width="3"/>
             <line x1="62" y1="28" x2="62" y2="70" stroke-width="3"/>
             <rect x="15" y="50" width="50" height="6" rx="1"/>
         </svg>`,
-        S11: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S11: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="10" y="20" width="60" height="15" rx="2"/>
             <rect x="10" y="45" width="60" height="15" rx="2"/>
             <rect x="15" y="24" width="50" height="7" rx="1"/>
@@ -319,15 +424,15 @@
             <path d="M5 35 L5 20" stroke-dasharray="4 2"/>
             <path d="M5 60 L5 45" stroke-dasharray="4 2"/>
         </svg>`,
-        S12: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
+            S12: `<svg viewBox="0 0 80 80" fill="none" stroke="#607D8B" stroke-width="2">
             <rect x="10" y="35" width="35" height="35" rx="2"/>
             <rect x="45" y="20" width="25" height="50" rx="2"/>
             <rect x="15" y="42" width="25" height="22" rx="1"/>
             <line x1="26" y1="53" x2="30" y2="53" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
 
-        // CÁLIDO
-        C01: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            // CÁLIDO
+            C01: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="3"/>
             <rect x="20" y="26" width="40" height="18" rx="1"/>
             <rect x="20" y="48" width="40" height="18" rx="1"/>
@@ -335,7 +440,7 @@
             <rect x="12" y="70" width="6" height="6" rx="1"/>
             <rect x="62" y="70" width="6" height="6" rx="1"/>
         </svg>`,
-        C02: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C02: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="15" y="25" width="50" height="45" rx="2"/>
             <ellipse cx="35" cy="45" rx="6" ry="4" fill="none" stroke-width="1.5"/>
             <path d="M18 30 Q40 35 62 30" stroke-width="1"/>
@@ -344,14 +449,14 @@
             <rect x="20" y="32" width="40" height="30" rx="1"/>
             <line x1="38" y1="47" x2="42" y2="47" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        C03: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C03: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="3"/>
             <rect x="22" y="26" width="36" height="38" rx="2"/>
             <circle cx="54" cy="45" r="3"/>
             <rect x="12" y="70" width="6" height="6" rx="1"/>
             <rect x="62" y="70" width="6" height="6" rx="1"/>
         </svg>`,
-        C04: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C04: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="18" y="25" width="44" height="45" rx="2"/>
             <rect x="23" y="32" width="34" height="30" rx="1"/>
             <path d="M25 35 L55 62 M25 42 L55 69 M25 49 L55 76 M25 56 L48 76" stroke-width="1" opacity="0.4"/>
@@ -359,7 +464,7 @@
             <rect x="15" y="70" width="5" height="6" rx="1"/>
             <rect x="60" y="70" width="5" height="6" rx="1"/>
         </svg>`,
-        C05: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C05: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="15" y="20" width="50" height="45" rx="12"/>
             <rect x="22" y="28" width="36" height="14" rx="4"/>
             <rect x="22" y="46" width="36" height="14" rx="4"/>
@@ -368,7 +473,7 @@
             <ellipse cx="22" cy="70" rx="4" ry="6"/>
             <ellipse cx="58" cy="70" rx="4" ry="6"/>
         </svg>`,
-        C06: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C06: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <ellipse cx="40" cy="45" rx="25" ry="28"/>
             <path d="M20 30 Q40 25 60 30" stroke-width="1"/>
             <path d="M18 45 Q40 40 62 45" stroke-width="1"/>
@@ -376,13 +481,13 @@
             <rect x="28" y="38" width="24" height="14" rx="2"/>
             <line x1="38" y1="45" x2="42" y2="45" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        C07: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C07: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="15" y="15" width="50" height="30" rx="2"/>
             <rect x="18" y="45" width="44" height="25" rx="5"/>
             <path d="M20 47 v22 M28 47 v22 M36 47 v22 M44 47 v22 M52 47 v22 M60 47 v22" stroke-width="1.5"/>
             <path d="M18 52 h44 M18 60 h44" stroke-width="1"/>
         </svg>`,
-        C08: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C08: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="20" y="20" width="40" height="50" rx="2"/>
             <line x1="15" y1="20" x2="15" y2="75" stroke-width="4" stroke-linecap="round"/>
             <line x1="65" y1="20" x2="65" y2="75" stroke-width="4" stroke-linecap="round"/>
@@ -393,14 +498,14 @@
             <rect x="25" y="28" width="30" height="15" rx="1"/>
             <rect x="25" y="48" width="30" height="15" rx="1"/>
         </svg>`,
-        C09: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C09: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="18" y="25" width="44" height="45" rx="2"/>
             <rect x="24" y="32" width="32" height="30" rx="1"/>
             <circle cx="40" cy="15" r="8" fill="none" stroke="#C4841D"/>
             <path d="M35 15 h10 M40 10 v10" stroke="#C4841D" stroke-width="1.5"/>
             <line x1="38" y1="47" x2="42" y2="47" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        C10: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
+            C10: `<svg viewBox="0 0 80 80" fill="none" stroke="#8D6E63" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="20" y="26" width="40" height="18" rx="1"/>
             <rect x="20" y="48" width="40" height="18" rx="1"/>
@@ -410,8 +515,8 @@
             <rect x="62" y="70" width="6" height="6" rx="1"/>
         </svg>`,
 
-        // MODERNO
-        M01: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            // MODERNO
+            M01: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <path d="M15 25 L65 25 L60 70 L20 70 Z"/>
             <rect x="22" y="32" width="36" height="14" rx="1"/>
             <rect x="22" y="50" width="36" height="14" rx="1"/>
@@ -420,7 +525,7 @@
             <line x1="18" y1="70" x2="18" y2="76" stroke-width="2"/>
             <line x1="62" y1="70" x2="62" y2="76" stroke-width="2"/>
         </svg>`,
-        M02: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M02: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="22" width="50" height="48" rx="2"/>
             <rect x="20" y="28" width="40" height="16" rx="1"/>
             <rect x="20" y="48" width="40" height="16" rx="1"/>
@@ -430,7 +535,7 @@
             <rect x="45" y="36" width="10" height="4" rx="1" fill="#37474F"/>
             <line x1="15" y1="72" x2="65" y2="72" stroke="#F5A623" stroke-width="2"/>
         </svg>`,
-        M03: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M03: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="25" width="50" height="45" rx="2"/>
             <rect x="12" y="22" width="56" height="6" rx="1" fill="none" stroke="#90CAF9" stroke-width="1.5"/>
             <rect x="20" y="34" width="40" height="30" rx="1"/>
@@ -438,7 +543,7 @@
             <rect x="12" y="70" width="6" height="6" rx="1"/>
             <rect x="62" y="70" width="6" height="6" rx="1"/>
         </svg>`,
-        M04: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M04: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="20" y="25" width="40" height="40" rx="1"/>
             <rect x="25" y="32" width="30" height="14" rx="1"/>
             <rect x="25" y="50" width="30" height="12" rx="1"/>
@@ -447,7 +552,7 @@
             <line x1="15" y1="20" x2="65" y2="20" stroke-width="2"/>
             <line x1="15" y1="70" x2="65" y2="70" stroke-width="2"/>
         </svg>`,
-        M05: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M05: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="25" width="50" height="45" rx="2"/>
             <rect x="20" y="32" width="40" height="15" rx="1"/>
             <rect x="20" y="52" width="40" height="15" rx="1"/>
@@ -455,7 +560,7 @@
             <circle cx="40" cy="18" r="5" fill="#F5A623" stroke="none"/>
             <path d="M35 10 L40 5 L45 10" stroke="#F5A623" stroke-width="1.5" fill="none"/>
         </svg>`,
-        M06: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M06: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="22" width="50" height="48" rx="2"/>
             <rect x="20" y="28" width="40" height="16" rx="1"/>
             <rect x="20" y="48" width="40" height="18" rx="1"/>
@@ -464,33 +569,33 @@
             <path d="M36 55 Q40 52 44 55" stroke-width="1.5"/>
             <path d="M37 59 Q40 62 43 59" stroke-width="1.5"/>
         </svg>`,
-        M07: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M07: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="35" width="50" height="18" rx="2"/>
             <rect x="20" y="40" width="40" height="8" rx="1"/>
             <path d="M10 35 L10 60 L15 60" stroke-width="3"/>
             <path d="M70 35 L70 60 L65 60" stroke-width="3"/>
             <line x1="38" y1="44" x2="42" y2="44" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        M08: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M08: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <polygon points="40,10 70,25 70,55 40,70 10,55 10,25"/>
             <rect x="20" y="32" width="40" height="18" rx="1"/>
             <line x1="38" y1="41" x2="42" y2="41" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        M09: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M09: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="20" y="26" width="40" height="18" rx="1" fill="#E3F2FD" stroke="#90CAF9"/>
             <rect x="20" y="48" width="40" height="18" rx="1" fill="#E3F2FD" stroke="#90CAF9"/>
             <line x1="38" y1="35" x2="42" y2="35" stroke="#90CAF9" stroke-width="3" stroke-linecap="round"/>
             <line x1="38" y1="57" x2="42" y2="57" stroke="#90CAF9" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        M10: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M10: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <path d="M20 20 Q40 15 60 20 L60 65 Q40 70 20 65 Z" />
             <rect x="25" y="28" width="30" height="14" rx="6"/>
             <rect x="25" y="48" width="30" height="14" rx="6"/>
             <line x1="38" y1="35" x2="42" y2="35" stroke-width="3" stroke-linecap="round"/>
             <line x1="38" y1="55" x2="42" y2="55" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        M11: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M11: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <ellipse cx="40" cy="20" rx="22" ry="8"/>
             <ellipse cx="40" cy="65" rx="22" ry="8"/>
             <line x1="18" y1="20" x2="18" y2="65"/>
@@ -498,20 +603,20 @@
             <ellipse cx="40" cy="42" rx="18" ry="5" stroke-dasharray="4 2"/>
             <rect x="28" y="35" width="24" height="14" rx="10"/>
         </svg>`,
-        M12: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M12: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="10" y="15" width="60" height="55" rx="1" stroke-width="3"/>
             <rect x="22" y="28" width="36" height="30" rx="2"/>
             <rect x="27" y="34" width="26" height="18" rx="1"/>
             <line x1="38" y1="43" x2="42" y2="43" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        M13: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M13: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="20" y="26" width="40" height="18" rx="1"/>
             <rect x="20" y="48" width="40" height="18" rx="1"/>
             <path d="M22 26 v18 M28 26 v18 M34 26 v18 M40 26 v18 M46 26 v18 M52 26 v18 M58 26 v18" stroke-width="1"/>
             <path d="M22 48 v18 M28 48 v18 M34 48 v18 M40 48 v18 M46 48 v18 M52 48 v18 M58 48 v18" stroke-width="1"/>
         </svg>`,
-        M14: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
+            M14: `<svg viewBox="0 0 80 80" fill="none" stroke="#37474F" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="12" y="17" width="56" height="8" rx="1" fill="#E0E0E0" stroke="#BDBDBD"/>
             <path d="M14 19 Q30 22 45 19 Q55 17 64 21" stroke="#BDBDBD" stroke-width="1"/>
@@ -521,8 +626,8 @@
             <line x1="38" y1="58" x2="42" y2="58" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
 
-        // CLÁSICO
-        K01: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            // CLÁSICO
+            K01: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="15" y="15" width="50" height="45" rx="2"/>
             <rect x="12" y="12" width="56" height="6" rx="1"/>
             <rect x="20" y="22" width="40" height="16" rx="1"/>
@@ -532,7 +637,7 @@
             <path d="M20 65 Q25 75 30 65" stroke-width="3"/>
             <path d="M50 65 Q55 75 60 65" stroke-width="3"/>
         </svg>`,
-        K02: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K02: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="18" y="20" width="44" height="40" rx="2"/>
             <rect x="23" y="26" width="34" height="14" rx="1"/>
             <rect x="23" y="44" width="34" height="14" rx="1"/>
@@ -541,7 +646,7 @@
             <line x1="22" y1="60" x2="18" y2="75" stroke-width="3" stroke-linecap="round"/>
             <line x1="58" y1="60" x2="62" y2="75" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        K03: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K03: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="18" y="18" width="44" height="42" rx="2"/>
             <rect x="23" y="24" width="34" height="14" rx="1"/>
             <rect x="23" y="42" width="34" height="14" rx="1"/>
@@ -550,14 +655,14 @@
             <path d="M22 60 Q20 65 22 70 Q24 75 22 78" stroke-width="3"/>
             <path d="M58 60 Q60 65 58 70 Q56 75 58 78" stroke-width="3"/>
         </svg>`,
-        K04: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K04: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="18" y="15" width="44" height="55" rx="2"/>
             <rect x="15" y="12" width="50" height="6" rx="1"/>
             <rect x="23" y="22" width="34" height="20" rx="1" stroke-dasharray="4 2"/>
             <rect x="23" y="46" width="34" height="20" rx="1"/>
             <line x1="38" y1="56" x2="42" y2="56" stroke-width="3" stroke-linecap="round"/>
         </svg>`,
-        K05: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K05: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <path d="M15 20 L40 10 L65 20" fill="none" stroke-width="2"/>
             <rect x="22" y="28" width="36" height="16" rx="1"/>
@@ -567,7 +672,7 @@
             <path d="M18 48 L22 56 L18 64" stroke="#C4841D" stroke-width="1.5"/>
             <path d="M62 48 L58 56 L62 64" stroke="#C4841D" stroke-width="1.5"/>
         </svg>`,
-        K06: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K06: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="18" y="20" width="44" height="45" rx="1"/>
             <rect x="23" y="26" width="34" height="16" rx="1"/>
             <rect x="23" y="46" width="34" height="16" rx="1"/>
@@ -576,7 +681,7 @@
             <line x1="22" y1="65" x2="22" y2="75" stroke-width="2"/>
             <line x1="58" y1="65" x2="58" y2="75" stroke-width="2"/>
         </svg>`,
-        K07: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K07: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <path d="M20 20 Q40 15 60 20 L60 60 Q40 65 20 60 Z"/>
             <rect x="25" y="28" width="30" height="12" rx="4"/>
             <rect x="25" y="44" width="30" height="12" rx="4"/>
@@ -585,7 +690,7 @@
             <path d="M22 60 Q18 68 22 76" stroke-width="3"/>
             <path d="M58 60 Q62 68 58 76" stroke-width="3"/>
         </svg>`,
-        K08: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
+            K08: `<svg viewBox="0 0 80 80" fill="none" stroke="#5D4037" stroke-width="2">
             <rect x="18" y="18" width="44" height="38" rx="2"/>
             <rect x="23" y="24" width="34" height="12" rx="1"/>
             <rect x="23" y="40" width="34" height="12" rx="1"/>
@@ -594,101 +699,101 @@
             <path d="M22 56 Q18 62 22 68 Q26 74 22 76" stroke-width="2.5"/>
             <path d="M58 56 Q62 62 58 68 Q54 74 58 76" stroke-width="2.5"/>
         </svg>`
-    };
+        };
 
-    // Generate default SVG for missing icons
-    function getDefaultSvg(cat) {
-        const colors = { simple: '#607D8B', calido: '#8D6E63', moderno: '#37474F', clasico: '#5D4037' };
-        const color = colors[cat] || '#607D8B';
-        return `<svg viewBox="0 0 80 80" fill="none" stroke="${color}" stroke-width="2">
+        // Generate default SVG for missing icons
+        function getDefaultSvg(cat) {
+            const colors = { simple: '#607D8B', calido: '#8D6E63', moderno: '#37474F', clasico: '#5D4037' };
+            const color = colors[cat] || '#607D8B';
+            return `<svg viewBox="0 0 80 80" fill="none" stroke="${color}" stroke-width="2">
             <rect x="15" y="20" width="50" height="50" rx="2"/>
             <rect x="20" y="26" width="40" height="18" rx="1"/>
             <rect x="20" y="48" width="40" height="18" rx="1"/>
             <line x1="38" y1="35" x2="42" y2="35" stroke-width="3" stroke-linecap="round"/>
             <line x1="38" y1="57" x2="42" y2="57" stroke-width="3" stroke-linecap="round"/>
         </svg>`;
-    }
-
-    // Complete catalog from JSON
-    const catalogo = [
-        // SIMPLE (12)
-        { id: "S01", nombre: "Cubo", categoria: "simple", desc: "Forma cúbica pura con 1 cajón", precio: 75000, montaje: "piso", smart: false },
-        { id: "S02", nombre: "Aire", categoria: "simple", desc: "Flotante minimalista con cajón oculto", precio: 85000, montaje: "flotante", smart: true },
-        { id: "S03", nombre: "Torre", categoria: "simple", desc: "Vertical con 3 cajones estrechos", precio: 95000, montaje: "piso", smart: false },
-        { id: "S04", nombre: "Plano", categoria: "simple", desc: "Bajo y ancho, 2 cajones lado a lado", precio: 99000, montaje: "piso", smart: true },
-        { id: "S05", nombre: "Nicho", categoria: "simple", desc: "Repisa abierta + 1 cajón inferior", precio: 79000, montaje: "piso", smart: true },
-        { id: "S06", nombre: "Duo", categoria: "simple", desc: "2 cajones apilados, sin patas", precio: 85000, montaje: "piso", smart: true },
-        { id: "S07", nombre: "Zócalo", categoria: "simple", desc: "Base corrida, 2 cajones, muy limpio", precio: 89000, montaje: "piso", smart: true },
-        { id: "S08", nombre: "Riel", categoria: "simple", desc: "Flotante con riel metálico visible", precio: 92000, montaje: "flotante", smart: true },
-        { id: "S09", nombre: "Cero", categoria: "simple", desc: "Sin tiradores, apertura push", precio: 95000, montaje: "piso", smart: true },
-        { id: "S10", nombre: "Mesa", categoria: "simple", desc: "Forma de mesa con repisa inferior", precio: 65000, montaje: "piso", smart: false },
-        { id: "S11", nombre: "Doble Aire", categoria: "simple", desc: "2 módulos flotantes apilados", precio: 110000, montaje: "flotante", smart: true },
-        { id: "S12", nombre: "Escalón", categoria: "simple", desc: "Asimétrico, 2 niveles escalonados", precio: 88000, montaje: "piso", smart: true },
-
-        // CÁLIDO (10)
-        { id: "C01", nombre: "Ratán", categoria: "calido", desc: "Frentes de ratán tejido, 2 cajones", precio: 99000, montaje: "piso", smart: false },
-        { id: "C02", nombre: "Nudo", categoria: "calido", desc: "Madera maciza con veta expuesta", precio: 120000, montaje: "piso", smart: true },
-        { id: "C03", nombre: "Cabaña", categoria: "calido", desc: "Estilo rústico con puerta", precio: 95000, montaje: "piso", smart: false },
-        { id: "C04", nombre: "Trenza", categoria: "calido", desc: "Detalle trenzado en frente del cajón", precio: 89000, montaje: "piso", smart: true },
-        { id: "C05", nombre: "Orgánico", categoria: "calido", desc: "Bordes redondeados, patas torneadas", precio: 115000, montaje: "piso", smart: true },
-        { id: "C06", nombre: "Tronco", categoria: "calido", desc: "Aspecto de tronco cortado, muy natural", precio: 135000, montaje: "piso", smart: false },
-        { id: "C07", nombre: "Canasto", categoria: "calido", desc: "Con canasto de fibra como cajón", precio: 85000, montaje: "piso", smart: false },
-        { id: "C08", nombre: "Bambú", categoria: "calido", desc: "Estructura de bambú visible", precio: 92000, montaje: "piso", smart: false },
-        { id: "C09", nombre: "Terracota", categoria: "calido", desc: "Combinación madera + detalle cerámico", precio: 105000, montaje: "piso", smart: false },
-        { id: "C10", nombre: "Cuerda", categoria: "calido", desc: "Tiradores y detalles en cuerda natural", precio: 88000, montaje: "piso", smart: true },
-
-        // MODERNO (14)
-        { id: "M01", nombre: "Neo", categoria: "moderno", desc: "Líneas angulares, patas metálicas", precio: 110000, montaje: "piso", smart: true },
-        { id: "M02", nombre: "Smart", categoria: "moderno", desc: "Diseñado para tecnología integrada", precio: 140000, montaje: "piso", smart: true },
-        { id: "M03", nombre: "Cristal", categoria: "moderno", desc: "Tapa de vidrio templado", precio: 125000, montaje: "piso", smart: true },
-        { id: "M04", nombre: "Acero", categoria: "moderno", desc: "Estructura metálica vista", precio: 115000, montaje: "piso", smart: true },
-        { id: "M05", nombre: "LED", categoria: "moderno", desc: "Iluminación LED perimetral incluida", precio: 135000, montaje: "piso", smart: true },
-        { id: "M06", nombre: "Seguro", categoria: "moderno", desc: "Cajón con cerradura biométrica", precio: 165000, montaje: "piso", smart: true },
-        { id: "M07", nombre: "Cantilever", categoria: "moderno", desc: "Flotante con soporte en C", precio: 105000, montaje: "flotante", smart: true },
-        { id: "M08", nombre: "Hexágono", categoria: "moderno", desc: "Forma hexagonal, muy distintivo", precio: 98000, montaje: "piso", smart: true },
-        { id: "M09", nombre: "Espejo", categoria: "moderno", desc: "Frentes espejados", precio: 130000, montaje: "piso", smart: true },
-        { id: "M10", nombre: "Curva", categoria: "moderno", desc: "Bordes curvos continuos", precio: 118000, montaje: "piso", smart: true },
-        { id: "M11", nombre: "Cilindro", categoria: "moderno", desc: "Forma cilíndrica con cajón oculto", precio: 108000, montaje: "piso", smart: true },
-        { id: "M12", nombre: "Marco", categoria: "moderno", desc: "Estructura tipo marco con caja flotante", precio: 112000, montaje: "piso", smart: true },
-        { id: "M13", nombre: "Panel", categoria: "moderno", desc: "Frente de panel estriado vertical", precio: 105000, montaje: "piso", smart: true },
-        { id: "M14", nombre: "Mármol", categoria: "moderno", desc: "Tapa efecto mármol o porcelanato", precio: 145000, montaje: "piso", smart: true },
-
-        // CLÁSICO (8)
-        { id: "K01", nombre: "Colonial", categoria: "clasico", desc: "Molduras clásicas, tiradores metálicos", precio: 125000, montaje: "piso", smart: false },
-        { id: "K02", nombre: "Retro", categoria: "clasico", desc: "Patas cónicas, estilo años 60", precio: 115000, montaje: "piso", smart: true },
-        { id: "K03", nombre: "Provenzal", categoria: "clasico", desc: "Patas torneadas, acabado envejecido", precio: 130000, montaje: "piso", smart: false },
-        { id: "K04", nombre: "Inglés", categoria: "clasico", desc: "Estilo biblioteca, con galería superior", precio: 135000, montaje: "piso", smart: false },
-        { id: "K05", nombre: "Art Deco", categoria: "clasico", desc: "Líneas geométricas doradas", precio: 140000, montaje: "piso", smart: true },
-        { id: "K06", nombre: "Shaker", categoria: "clasico", desc: "Simplicidad funcional tradicional", precio: 105000, montaje: "piso", smart: false },
-        { id: "K07", nombre: "Viena", categoria: "clasico", desc: "Detalles curvos estilo Thonet", precio: 118000, montaje: "piso", smart: false },
-        { id: "K08", nombre: "Chippendale", categoria: "clasico", desc: "Patas cabriole, muy elegante", precio: 155000, montaje: "piso", smart: false }
-    ];
-
-    const gallery = document.getElementById('gallery');
-    const resultsCount = document.getElementById('results-count');
-    let activeFilters = { categoria: 'todos', montaje: null, smart: null };
-
-    function renderGallery() {
-        let filtered = catalogo;
-
-        if (activeFilters.categoria !== 'todos') {
-            filtered = filtered.filter(p => p.categoria === activeFilters.categoria);
-        }
-        if (activeFilters.montaje === 'flotante') {
-            filtered = filtered.filter(p => p.montaje === 'flotante');
-        }
-        if (activeFilters.smart === true) {
-            filtered = filtered.filter(p => p.smart);
         }
 
-        resultsCount.textContent = `${filtered.length} modelo${filtered.length !== 1 ? 's' : ''}`;
+        // Complete catalog from JSON
+        const catalogo = [
+            // SIMPLE (12)
+            { id: "S01", nombre: "Cubo", categoria: "simple", desc: "Forma cúbica pura con 1 cajón", precio: 75000, montaje: "piso", smart: false },
+            { id: "S02", nombre: "Aire", categoria: "simple", desc: "Flotante minimalista con cajón oculto", precio: 85000, montaje: "flotante", smart: true },
+            { id: "S03", nombre: "Torre", categoria: "simple", desc: "Vertical con 3 cajones estrechos", precio: 95000, montaje: "piso", smart: false },
+            { id: "S04", nombre: "Plano", categoria: "simple", desc: "Bajo y ancho, 2 cajones lado a lado", precio: 99000, montaje: "piso", smart: true },
+            { id: "S05", nombre: "Nicho", categoria: "simple", desc: "Repisa abierta + 1 cajón inferior", precio: 79000, montaje: "piso", smart: true },
+            { id: "S06", nombre: "Duo", categoria: "simple", desc: "2 cajones apilados, sin patas", precio: 85000, montaje: "piso", smart: true },
+            { id: "S07", nombre: "Zócalo", categoria: "simple", desc: "Base corrida, 2 cajones, muy limpio", precio: 89000, montaje: "piso", smart: true },
+            { id: "S08", nombre: "Riel", categoria: "simple", desc: "Flotante con riel metálico visible", precio: 92000, montaje: "flotante", smart: true },
+            { id: "S09", nombre: "Cero", categoria: "simple", desc: "Sin tiradores, apertura push", precio: 95000, montaje: "piso", smart: true },
+            { id: "S10", nombre: "Mesa", categoria: "simple", desc: "Forma de mesa con repisa inferior", precio: 65000, montaje: "piso", smart: false },
+            { id: "S11", nombre: "Doble Aire", categoria: "simple", desc: "2 módulos flotantes apilados", precio: 110000, montaje: "flotante", smart: true },
+            { id: "S12", nombre: "Escalón", categoria: "simple", desc: "Asimétrico, 2 niveles escalonados", precio: 88000, montaje: "piso", smart: true },
 
-        if (filtered.length === 0) {
-            gallery.innerHTML = '<div class="empty">No hay modelos con estos filtros</div>';
-            return;
-        }
+            // CÁLIDO (10)
+            { id: "C01", nombre: "Ratán", categoria: "calido", desc: "Frentes de ratán tejido, 2 cajones", precio: 99000, montaje: "piso", smart: false },
+            { id: "C02", nombre: "Nudo", categoria: "calido", desc: "Madera maciza con veta expuesta", precio: 120000, montaje: "piso", smart: true },
+            { id: "C03", nombre: "Cabaña", categoria: "calido", desc: "Estilo rústico con puerta", precio: 95000, montaje: "piso", smart: false },
+            { id: "C04", nombre: "Trenza", categoria: "calido", desc: "Detalle trenzado en frente del cajón", precio: 89000, montaje: "piso", smart: true },
+            { id: "C05", nombre: "Orgánico", categoria: "calido", desc: "Bordes redondeados, patas torneadas", precio: 115000, montaje: "piso", smart: true },
+            { id: "C06", nombre: "Tronco", categoria: "calido", desc: "Aspecto de tronco cortado, muy natural", precio: 135000, montaje: "piso", smart: false },
+            { id: "C07", nombre: "Canasto", categoria: "calido", desc: "Con canasto de fibra como cajón", precio: 85000, montaje: "piso", smart: false },
+            { id: "C08", nombre: "Bambú", categoria: "calido", desc: "Estructura de bambú visible", precio: 92000, montaje: "piso", smart: false },
+            { id: "C09", nombre: "Terracota", categoria: "calido", desc: "Combinación madera + detalle cerámico", precio: 105000, montaje: "piso", smart: false },
+            { id: "C10", nombre: "Cuerda", categoria: "calido", desc: "Tiradores y detalles en cuerda natural", precio: 88000, montaje: "piso", smart: true },
 
-        gallery.innerHTML = filtered.map(p => `
+            // MODERNO (14)
+            { id: "M01", nombre: "Neo", categoria: "moderno", desc: "Líneas angulares, patas metálicas", precio: 110000, montaje: "piso", smart: true },
+            { id: "M02", nombre: "Smart", categoria: "moderno", desc: "Diseñado para tecnología integrada", precio: 140000, montaje: "piso", smart: true },
+            { id: "M03", nombre: "Cristal", categoria: "moderno", desc: "Tapa de vidrio templado", precio: 125000, montaje: "piso", smart: true },
+            { id: "M04", nombre: "Acero", categoria: "moderno", desc: "Estructura metálica vista", precio: 115000, montaje: "piso", smart: true },
+            { id: "M05", nombre: "LED", categoria: "moderno", desc: "Iluminación LED perimetral incluida", precio: 135000, montaje: "piso", smart: true },
+            { id: "M06", nombre: "Seguro", categoria: "moderno", desc: "Cajón con cerradura biométrica", precio: 165000, montaje: "piso", smart: true },
+            { id: "M07", nombre: "Cantilever", categoria: "moderno", desc: "Flotante con soporte en C", precio: 105000, montaje: "flotante", smart: true },
+            { id: "M08", nombre: "Hexágono", categoria: "moderno", desc: "Forma hexagonal, muy distintivo", precio: 98000, montaje: "piso", smart: true },
+            { id: "M09", nombre: "Espejo", categoria: "moderno", desc: "Frentes espejados", precio: 130000, montaje: "piso", smart: true },
+            { id: "M10", nombre: "Curva", categoria: "moderno", desc: "Bordes curvos continuos", precio: 118000, montaje: "piso", smart: true },
+            { id: "M11", nombre: "Cilindro", categoria: "moderno", desc: "Forma cilíndrica con cajón oculto", precio: 108000, montaje: "piso", smart: true },
+            { id: "M12", nombre: "Marco", categoria: "moderno", desc: "Estructura tipo marco con caja flotante", precio: 112000, montaje: "piso", smart: true },
+            { id: "M13", nombre: "Panel", categoria: "moderno", desc: "Frente de panel estriado vertical", precio: 105000, montaje: "piso", smart: true },
+            { id: "M14", nombre: "Mármol", categoria: "moderno", desc: "Tapa efecto mármol o porcelanato", precio: 145000, montaje: "piso", smart: true },
+
+            // CLÁSICO (8)
+            { id: "K01", nombre: "Colonial", categoria: "clasico", desc: "Molduras clásicas, tiradores metálicos", precio: 125000, montaje: "piso", smart: false },
+            { id: "K02", nombre: "Retro", categoria: "clasico", desc: "Patas cónicas, estilo años 60", precio: 115000, montaje: "piso", smart: true },
+            { id: "K03", nombre: "Provenzal", categoria: "clasico", desc: "Patas torneadas, acabado envejecido", precio: 130000, montaje: "piso", smart: false },
+            { id: "K04", nombre: "Inglés", categoria: "clasico", desc: "Estilo biblioteca, con galería superior", precio: 135000, montaje: "piso", smart: false },
+            { id: "K05", nombre: "Art Deco", categoria: "clasico", desc: "Líneas geométricas doradas", precio: 140000, montaje: "piso", smart: true },
+            { id: "K06", nombre: "Shaker", categoria: "clasico", desc: "Simplicidad funcional tradicional", precio: 105000, montaje: "piso", smart: false },
+            { id: "K07", nombre: "Viena", categoria: "clasico", desc: "Detalles curvos estilo Thonet", precio: 118000, montaje: "piso", smart: false },
+            { id: "K08", nombre: "Chippendale", categoria: "clasico", desc: "Patas cabriole, muy elegante", precio: 155000, montaje: "piso", smart: false }
+        ];
+
+        const gallery = document.getElementById('gallery');
+        const resultsCount = document.getElementById('results-count');
+        let activeFilters = { categoria: 'todos', montaje: null, smart: null };
+
+        function renderGallery() {
+            let filtered = catalogo;
+
+            if (activeFilters.categoria !== 'todos') {
+                filtered = filtered.filter(p => p.categoria === activeFilters.categoria);
+            }
+            if (activeFilters.montaje === 'flotante') {
+                filtered = filtered.filter(p => p.montaje === 'flotante');
+            }
+            if (activeFilters.smart === true) {
+                filtered = filtered.filter(p => p.smart);
+            }
+
+            resultsCount.textContent = `${filtered.length} modelo${filtered.length !== 1 ? 's' : ''}`;
+
+            if (filtered.length === 0) {
+                gallery.innerHTML = '<div class="empty">No hay modelos con estos filtros</div>';
+                return;
+            }
+
+            gallery.innerHTML = filtered.map(p => `
             <div class="product" data-cat="${p.categoria}" onclick="goToConfig('${p.id}')">
                 <div class="product-img">
                     ${p.montaje === 'flotante' ? '<span class="product-badge flotante">Flotante</span>' : ''}
@@ -705,50 +810,51 @@
                 </div>
             </div>
         `).join('');
-    }
+        }
 
-    function goToConfig(id) {
-        window.location.href = `bombus_configurador.html?modelo=${id}`;
-    }
+        function goToConfig(id) {
+            window.location.href = `bombus_configurador.html?modelo=${id}`;
+        }
 
-    // Filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const filter = btn.dataset.filter;
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
 
-            if (['todos', 'simple', 'calido', 'moderno', 'clasico'].includes(filter)) {
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    if (['todos', 'simple', 'calido', 'moderno', 'clasico'].includes(b.dataset.filter)) {
-                        b.classList.remove('active');
-                    }
-                });
-                btn.classList.add('active');
-                activeFilters.categoria = filter;
-            } else if (filter === 'flotante') {
-                btn.classList.toggle('active');
-                activeFilters.montaje = btn.classList.contains('active') ? 'flotante' : null;
-            } else if (filter === 'smart') {
-                btn.classList.toggle('active');
-                activeFilters.smart = btn.classList.contains('active') ? true : null;
-            }
+                if (['todos', 'simple', 'calido', 'moderno', 'clasico'].includes(filter)) {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        if (['todos', 'simple', 'calido', 'moderno', 'clasico'].includes(b.dataset.filter)) {
+                            b.classList.remove('active');
+                        }
+                    });
+                    btn.classList.add('active');
+                    activeFilters.categoria = filter;
+                } else if (filter === 'flotante') {
+                    btn.classList.toggle('active');
+                    activeFilters.montaje = btn.classList.contains('active') ? 'flotante' : null;
+                } else if (filter === 'smart') {
+                    btn.classList.toggle('active');
+                    activeFilters.smart = btn.classList.contains('active') ? true : null;
+                }
 
-            renderGallery();
+                renderGallery();
+            });
         });
-    });
 
-    // URL params
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get('cat');
-    if (cat && ['simple', 'calido', 'moderno', 'clasico'].includes(cat)) {
-        activeFilters.categoria = cat;
-        document.querySelectorAll('.filter-btn').forEach(b => {
-            b.classList.remove('active');
-            if (b.dataset.filter === cat) b.classList.add('active');
-        });
-    }
+        // URL params
+        const params = new URLSearchParams(window.location.search);
+        const cat = params.get('cat');
+        if (cat && ['simple', 'calido', 'moderno', 'clasico'].includes(cat)) {
+            activeFilters.categoria = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active');
+                if (b.dataset.filter === cat) b.classList.add('active');
+            });
+        }
 
-    renderGallery();
+        renderGallery();
     </script>
 
 </body>
+
 </html>

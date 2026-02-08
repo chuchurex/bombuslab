@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bombus | Galería</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="assets/js/analytics.js"></script>
     <style>
         :root {
             /* Palette from style.css */
@@ -714,64 +715,60 @@
         </svg>`;
         }
 
-        // Complete catalog from JSON
-        const catalogo = [
-            // SIMPLE (12)
-            { id: "S01", nombre: "Cubo", categoria: "simple", desc: "Forma cúbica pura con 1 cajón", precio: 75000, montaje: "piso", smart: false },
-            { id: "S02", nombre: "Aire", categoria: "simple", desc: "Flotante minimalista con cajón oculto", precio: 85000, montaje: "flotante", smart: true },
-            { id: "S03", nombre: "Torre", categoria: "simple", desc: "Vertical con 3 cajones estrechos", precio: 95000, montaje: "piso", smart: false },
-            { id: "S04", nombre: "Plano", categoria: "simple", desc: "Bajo y ancho, 2 cajones lado a lado", precio: 99000, montaje: "piso", smart: true },
-            { id: "S05", nombre: "Nicho", categoria: "simple", desc: "Repisa abierta + 1 cajón inferior", precio: 79000, montaje: "piso", smart: true },
-            { id: "S06", nombre: "Duo", categoria: "simple", desc: "2 cajones apilados, sin patas", precio: 85000, montaje: "piso", smart: true },
-            { id: "S07", nombre: "Zócalo", categoria: "simple", desc: "Base corrida, 2 cajones, muy limpio", precio: 89000, montaje: "piso", smart: true },
-            { id: "S08", nombre: "Riel", categoria: "simple", desc: "Flotante con riel metálico visible", precio: 92000, montaje: "flotante", smart: true },
-            { id: "S09", nombre: "Cero", categoria: "simple", desc: "Sin tiradores, apertura push", precio: 95000, montaje: "piso", smart: true },
-            { id: "S10", nombre: "Mesa", categoria: "simple", desc: "Forma de mesa con repisa inferior", precio: 65000, montaje: "piso", smart: false },
-            { id: "S11", nombre: "Doble Aire", categoria: "simple", desc: "2 módulos flotantes apilados", precio: 110000, montaje: "flotante", smart: true },
-            { id: "S12", nombre: "Escalón", categoria: "simple", desc: "Asimétrico, 2 niveles escalonados", precio: 88000, montaje: "piso", smart: true },
-
-            // CÁLIDO (10)
-            { id: "C01", nombre: "Ratán", categoria: "calido", desc: "Frentes de ratán tejido, 2 cajones", precio: 99000, montaje: "piso", smart: false },
-            { id: "C02", nombre: "Nudo", categoria: "calido", desc: "Madera maciza con veta expuesta", precio: 120000, montaje: "piso", smart: true },
-            { id: "C03", nombre: "Cabaña", categoria: "calido", desc: "Estilo rústico con puerta", precio: 95000, montaje: "piso", smart: false },
-            { id: "C04", nombre: "Trenza", categoria: "calido", desc: "Detalle trenzado en frente del cajón", precio: 89000, montaje: "piso", smart: true },
-            { id: "C05", nombre: "Orgánico", categoria: "calido", desc: "Bordes redondeados, patas torneadas", precio: 115000, montaje: "piso", smart: true },
-            { id: "C06", nombre: "Tronco", categoria: "calido", desc: "Aspecto de tronco cortado, muy natural", precio: 135000, montaje: "piso", smart: false },
-            { id: "C07", nombre: "Canasto", categoria: "calido", desc: "Con canasto de fibra como cajón", precio: 85000, montaje: "piso", smart: false },
-            { id: "C08", nombre: "Bambú", categoria: "calido", desc: "Estructura de bambú visible", precio: 92000, montaje: "piso", smart: false },
-            { id: "C09", nombre: "Terracota", categoria: "calido", desc: "Combinación madera + detalle cerámico", precio: 105000, montaje: "piso", smart: false },
-            { id: "C10", nombre: "Cuerda", categoria: "calido", desc: "Tiradores y detalles en cuerda natural", precio: 88000, montaje: "piso", smart: true },
-
-            // MODERNO (14)
-            { id: "M01", nombre: "Neo", categoria: "moderno", desc: "Líneas angulares, patas metálicas", precio: 110000, montaje: "piso", smart: true },
-            { id: "M02", nombre: "Smart", categoria: "moderno", desc: "Diseñado para tecnología integrada", precio: 140000, montaje: "piso", smart: true },
-            { id: "M03", nombre: "Cristal", categoria: "moderno", desc: "Tapa de vidrio templado", precio: 125000, montaje: "piso", smart: true },
-            { id: "M04", nombre: "Acero", categoria: "moderno", desc: "Estructura metálica vista", precio: 115000, montaje: "piso", smart: true },
-            { id: "M05", nombre: "LED", categoria: "moderno", desc: "Iluminación LED perimetral incluida", precio: 135000, montaje: "piso", smart: true },
-            { id: "M06", nombre: "Seguro", categoria: "moderno", desc: "Cajón con cerradura biométrica", precio: 165000, montaje: "piso", smart: true },
-            { id: "M07", nombre: "Cantilever", categoria: "moderno", desc: "Flotante con soporte en C", precio: 105000, montaje: "flotante", smart: true },
-            { id: "M08", nombre: "Hexágono", categoria: "moderno", desc: "Forma hexagonal, muy distintivo", precio: 98000, montaje: "piso", smart: true },
-            { id: "M09", nombre: "Espejo", categoria: "moderno", desc: "Frentes espejados", precio: 130000, montaje: "piso", smart: true },
-            { id: "M10", nombre: "Curva", categoria: "moderno", desc: "Bordes curvos continuos", precio: 118000, montaje: "piso", smart: true },
-            { id: "M11", nombre: "Cilindro", categoria: "moderno", desc: "Forma cilíndrica con cajón oculto", precio: 108000, montaje: "piso", smart: true },
-            { id: "M12", nombre: "Marco", categoria: "moderno", desc: "Estructura tipo marco con caja flotante", precio: 112000, montaje: "piso", smart: true },
-            { id: "M13", nombre: "Panel", categoria: "moderno", desc: "Frente de panel estriado vertical", precio: 105000, montaje: "piso", smart: true },
-            { id: "M14", nombre: "Mármol", categoria: "moderno", desc: "Tapa efecto mármol o porcelanato", precio: 145000, montaje: "piso", smart: true },
-
-            // CLÁSICO (8)
-            { id: "K01", nombre: "Colonial", categoria: "clasico", desc: "Molduras clásicas, tiradores metálicos", precio: 125000, montaje: "piso", smart: false },
-            { id: "K02", nombre: "Retro", categoria: "clasico", desc: "Patas cónicas, estilo años 60", precio: 115000, montaje: "piso", smart: true },
-            { id: "K03", nombre: "Provenzal", categoria: "clasico", desc: "Patas torneadas, acabado envejecido", precio: 130000, montaje: "piso", smart: false },
-            { id: "K04", nombre: "Inglés", categoria: "clasico", desc: "Estilo biblioteca, con galería superior", precio: 135000, montaje: "piso", smart: false },
-            { id: "K05", nombre: "Art Deco", categoria: "clasico", desc: "Líneas geométricas doradas", precio: 140000, montaje: "piso", smart: true },
-            { id: "K06", nombre: "Shaker", categoria: "clasico", desc: "Simplicidad funcional tradicional", precio: 105000, montaje: "piso", smart: false },
-            { id: "K07", nombre: "Viena", categoria: "clasico", desc: "Detalles curvos estilo Thonet", precio: 118000, montaje: "piso", smart: false },
-            { id: "K08", nombre: "Chippendale", categoria: "clasico", desc: "Patas cabriole, muy elegante", precio: 155000, montaje: "piso", smart: false }
-        ];
+        // Catalog will be loaded from JSON
+        let catalogo = [];
+        let catalogoData = null;
 
         const gallery = document.getElementById('gallery');
         const resultsCount = document.getElementById('results-count');
         let activeFilters = { categoria: 'todos', montaje: null, smart: null };
+
+        // Load catalog from JSON file
+        async function loadCatalogo() {
+            try {
+                const response = await fetch('bombus_catalogo.json');
+                catalogoData = await response.json();
+
+                // Transform JSON data to gallery format
+                catalogo = [];
+                for (const [id, modelo] of Object.entries(catalogoData.modelos)) {
+                    const gadgets = modelo.compatible_gadgets || [];
+                    const hasTech = gadgets.includes('wireless') || gadgets.includes('led') ||
+                                   gadgets.includes('usb') || gadgets.includes('speaker') ||
+                                   gadgets.includes('fingerprint');
+
+                    catalogo.push({
+                        id: id,
+                        nombre: modelo.nombre,
+                        categoria: modelo.categoria,
+                        desc: modelo.descripcion,
+                        precio: modelo.precio_base,
+                        montaje: modelo.montaje,
+                        smart: hasTech
+                    });
+                }
+
+                // Apply URL params after loading
+                applyUrlParams();
+                renderGallery();
+            } catch (error) {
+                console.error('Error loading catalog:', error);
+                // Fallback message
+                gallery.innerHTML = '<div class="empty">Error cargando el catálogo</div>';
+            }
+        }
+
+        function applyUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const cat = params.get('cat');
+            if (cat && ['simple', 'calido', 'moderno', 'clasico'].includes(cat)) {
+                activeFilters.categoria = cat;
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                    if (b.dataset.filter === cat) b.classList.add('active');
+                });
+            }
+        }
 
         function renderGallery() {
             let filtered = catalogo;
@@ -841,18 +838,8 @@
             });
         });
 
-        // URL params
-        const params = new URLSearchParams(window.location.search);
-        const cat = params.get('cat');
-        if (cat && ['simple', 'calido', 'moderno', 'clasico'].includes(cat)) {
-            activeFilters.categoria = cat;
-            document.querySelectorAll('.filter-btn').forEach(b => {
-                b.classList.remove('active');
-                if (b.dataset.filter === cat) b.classList.add('active');
-            });
-        }
-
-        renderGallery();
+        // Initialize by loading catalog from JSON
+        loadCatalogo();
     </script>
 
 </body>

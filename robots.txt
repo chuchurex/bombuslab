@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bombuslab.cl/sitemap.xml
+
+# Bombus Lab - Veladores Artesanales
+# https://bombuslab.cl

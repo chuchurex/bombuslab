@@ -4,7 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bombus | Configurador</title>
+    <title>Configura tu Velador 3D | Personaliza Dimensiones y Tech | Bombus</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Diseña tu velador perfecto en 3D. Personaliza dimensiones, materiales y agrega tecnología: USB, carga inalámbrica, LED. Cotiza directo por WhatsApp.">
+    <meta name="keywords" content="configurador veladores, diseñar velador, velador personalizado, velador 3D, velador USB, carga inalámbrica">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://bombuslab.cl/bombus_configurador.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://bombuslab.cl/bombus_configurador.html">
+    <meta property="og:title" content="Configura tu Velador 3D | Bombus">
+    <meta property="og:description" content="Diseña tu velador perfecto. Personaliza dimensiones, materiales y tecnología integrada.">
+    <meta property="og:image" content="https://bombuslab.cl/assets/images/bombus_og_image.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Configura tu Velador 3D | Bombus">
+    <meta name="twitter:description" content="Diseña tu velador perfecto con nuestro configurador 3D interactivo.">
+
+    <link rel="icon" type="image/png" href="assets/images/bombus_favicon.png">
+    <meta name="theme-color" content="#1A1A1A">
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="assets/js/analytics.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -99,15 +121,122 @@
             .main {
                 grid-template-columns: 1fr;
                 height: auto;
+                min-height: 100vh;
             }
 
             .viewer {
-                height: 50vh;
+                height: 45vh;
+                min-height: 300px;
             }
 
             .panel {
                 height: auto;
                 max-height: none;
+                padding: 1.5rem;
+            }
+
+            .model-name {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .model-name h1 {
+                font-size: 1.5rem;
+            }
+
+            .model-name p {
+                font-size: 0.85rem;
+                max-width: 250px;
+            }
+
+            .viewer-hint {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
+                bottom: 1rem;
+            }
+
+            .section-title {
+                font-size: 1rem;
+            }
+
+            .colors {
+                gap: 0.75rem;
+            }
+
+            .color-opt {
+                width: 35px;
+                height: 35px;
+            }
+
+            .gadget {
+                padding: 0.8rem;
+            }
+
+            .gadget-name {
+                font-size: 0.9rem;
+            }
+
+            .gadget-desc {
+                font-size: 0.75rem;
+            }
+
+            .summary-row.total .value {
+                font-size: 1.5rem;
+            }
+
+            .cta-btn {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+                height: 70px;
+            }
+
+            .logo img {
+                height: 32px;
+            }
+
+            .logo span {
+                font-size: 1rem;
+            }
+
+            .back-link {
+                font-size: 0.8rem;
+            }
+
+            .back-link svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .viewer {
+                height: 40vh;
+                min-height: 280px;
+            }
+
+            .panel {
+                padding: 1rem;
+            }
+
+            .section {
+                margin-bottom: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .model-name h1 {
+                font-size: 1.25rem;
+            }
+
+            .dim-control {
+                margin-bottom: 1rem;
+            }
+
+            .back-link span {
+                display: none;
             }
         }
 

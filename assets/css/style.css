@@ -1,6 +1,7 @@
 /* assets/css/style.css */
 
-:root {
+:root
+{
     --color-bg: #1A1A1A;
     --color-text: #FFFFFF;
     --color-text-muted: rgba(255, 255, 255, 0.6);
@@ -11,13 +12,15 @@
     --anim-ease: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-* {
+*
+{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+body
+{
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-sans);
@@ -25,7 +28,8 @@ body {
 }
 
 /* Floating Header */
-header {
+header
+{
     position: fixed;
     top: 0;
     left: 0;
@@ -35,14 +39,18 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 2rem;
-    pointer-events: none; /* Let clicks pass through to columns largely */
+    pointer-events: none;
+    /* Let clicks pass through to columns largely */
 }
 
-header * {
-    pointer-events: auto; /* Re-enable pointer events for actual buttons */
+header *
+{
+    pointer-events: auto;
+    /* Re-enable pointer events for actual buttons */
 }
 
-.logo {
+.logo
+{
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -50,24 +58,28 @@ header * {
     color: var(--color-text);
 }
 
-.logo img {
+.logo img
+{
     height: 40px;
     width: auto;
 }
 
-.logo span {
+.logo span
+{
     font-family: var(--font-serif);
     font-size: 1.25rem;
     letter-spacing: 0.05em;
     font-weight: 700;
 }
 
-nav {
+nav
+{
     display: flex;
     gap: 2rem;
 }
 
-.nav-link {
+.nav-link
+{
     color: var(--color-text);
     text-decoration: none;
     font-size: 0.9rem;
@@ -76,13 +88,15 @@ nav {
     transition: opacity 0.3s, color 0.3s;
 }
 
-.nav-link:hover {
+.nav-link:hover
+{
     opacity: 1;
     color: var(--color-accent);
 }
 
 /* Main Accordion Container */
-.accordion-container {
+.accordion-container
+{
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -90,56 +104,71 @@ nav {
 }
 
 /* Individual Columns */
-.column {
+.column
+{
     position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid rgba(255,255,255,0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     transition: flex var(--anim-speed) var(--anim-ease), background-color 0.3s;
     cursor: pointer;
     overflow: hidden;
+    text-decoration: none;
+    /* Reset for anchor tag */
+    color: var(--color-text);
+    /* Reset for anchor tag */
 }
 
-.column:last-child {
+.column:last-child
+{
     border-right: none;
 }
 
-.column:hover {
-    flex: 3; /* Expand on hover */
-    background-color: rgba(255, 255, 255, 0.02);
+.column:hover
+{
+    flex: 3;
+    /* Expand on hover */
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, rgba(245, 166, 35, 0.05) 100%);
 }
 
-.column:hover .col-content {
+.column:hover .col-content
+{
     opacity: 1;
     transform: translateY(0);
 }
 
-.column:hover .col-title {
+.column:hover .col-title
+{
     color: var(--color-accent);
 }
 
-.column:hover .col-illustration {
+.column:hover .col-illustration
+{
     transform: scale(1.1);
     stroke: var(--color-accent);
 }
 
 /* Content within columns */
-.col-illustration {
+.col-illustration
+{
     width: 120px;
     height: 120px;
     margin-bottom: 2rem;
     transition: transform var(--anim-speed), stroke 0.3s;
-    stroke: var(--color-text); /* Default stroke */
+    stroke: var(--color-text);
+    /* Default stroke */
     stroke-width: 1.5;
     fill: none;
 }
 
-.col-title {
+.col-title
+{
     font-family: var(--font-serif);
-    font-size: 3rem; /* Large vertical styling logic usually needs writing-mode if very narrow, but here we assume standard */
+    font-size: 3rem;
+    /* Large vertical styling logic usually needs writing-mode if very narrow, but here we assume standard */
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(180deg);
@@ -148,12 +177,11 @@ nav {
     transition: color 0.3s;
 }
 
-.column:hover .col-title {
-    /* When expanded, maybe rotate back? Keeping it vertical is stylish, let's keep vertical for now or adjust based on width logic if intended */
-}
+
 
 /* Hidden content that reveals on expand */
-.col-content {
+.col-content
+{
     position: absolute;
     bottom: 15%;
     opacity: 0;
@@ -163,28 +191,14 @@ nav {
     width: 80%;
 }
 
-.col-desc {
+.col-desc
+{
     font-size: 1rem;
     color: var(--color-text-muted);
     margin-bottom: 1.5rem;
 }
 
-.btn-explore {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid var(--color-accent);
-    color: var(--color-accent);
-    text-decoration: none;
-    border-radius: 50px;
-    transition: all 0.3s;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-}
-
-.btn-explore:hover {
-    background: var(--color-accent);
-    color: var(--color-bg);
-}
+/* .btn-explore removed */
 
 /* Desktop Horizontal Title Adjustment */
 /* If the column is expanded, we might want the text horizontal. 
@@ -192,64 +206,104 @@ nav {
    vertical text is iconic for these accordions. */
 
 /* Mobile Layout */
-@media (max-width: 768px) {
-    .accordion-container {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
+/* Mobile Layout */
+@media (max-width: 768px)
+{
+    .accordion-container
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: 100vh;
+        width: 100vw;
+        padding-top: 80px;
+        /* Space for fixed header */
+        gap: 1px;
+        /* Gap for borders if desired, or handle via borders */
+        background-color: rgba(255, 255, 255, 0.05);
+        /* Separator color */
     }
 
-    .column {
+    .column
+    {
         flex: none;
-        height: 25vh; /* 4 items = 100vh total */
-        min-height: 200px;
+        height: auto;
+        min-height: 0;
         width: 100%;
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        flex-direction: row;
-        justify-content: flex-start;
-        padding: 0 2rem;
-    }
-    
-    .column:hover {
-        flex: none; /* No expansion on mobile, just links */
+        border: none;
+        background-color: var(--color-bg);
+        justify-content: center;
+        padding: 1.5rem;
+        transition: background-color 0.3s;
     }
 
-    .col-title {
+    .column:hover
+    {
+        flex: none;
+        /* No expansion on mobile */
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .column:active
+    {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .col-title
+    {
         writing-mode: horizontal-tb;
         transform: none;
-        font-size: 2rem;
-        order: 2;
+        font-size: 1.25rem;
+        margin-top: 1rem;
+        text-align: center;
+        width: 100%;
     }
 
-    .col-illustration {
-        width: 60px;
-        height: 60px;
+    .col-illustration
+    {
+        width: 50px;
+        height: 50px;
         margin-bottom: 0;
-        margin-right: 1.5rem;
-        order: 1;
     }
 
-    .col-content {
+    .col-content
+    {
         position: static;
-        opacity: 1;
+        opacity: 0.7;
         transform: none;
-        width: auto;
-        margin-left: auto;
-        order: 3;
+        width: 100%;
+        margin-top: 0.5rem;
+        pointer-events: none;
+        /* Click falls through to parent link */
     }
-    
-    .col-desc { display: none; } /* Hide desc on mobile list view for cleanliness */
-    
-    .btn-explore {
-        padding: 0.5rem;
-        border: none;
-        font-size: 1.5rem; /* Arrow icon size */
+
+    .col-desc
+    {
+        display: none;
+        /* Clean card look */
     }
-    
-    header {
-        position: sticky;
+
+    header
+    {
+        position: fixed;
         background: rgba(26, 26, 26, 0.95);
         backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo img
+    {
+        height: 32px;
+    }
+
+    .logo span
+    {
+        font-size: 1rem;
+    }
+
+    nav
+    {
+        display: none;
+        /* Simplified nav for mobile - or hamburger, but user didn't ask for menu logic, just layout */
     }
 }

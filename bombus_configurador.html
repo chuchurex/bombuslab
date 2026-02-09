@@ -83,7 +83,7 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 52px;
             width: auto;
         }
 
@@ -195,7 +195,7 @@
             }
 
             .logo img {
-                height: 32px;
+                height: 44px;
             }
 
             .logo span {
@@ -287,6 +287,36 @@
             font-size: 0.8rem;
             backdrop-filter: blur(4px);
             pointer-events: none;
+        }
+
+        /* Decorative Bumblebee */
+        .viewer-bee {
+            position: absolute;
+            top: 28%;
+            left: 58%;
+            width: 90px;
+            height: auto;
+            opacity: 0.85;
+            transform: scaleX(-1);
+            pointer-events: none;
+            z-index: 10;
+            animation: floatBee 4s ease-in-out infinite;
+        }
+
+        @keyframes floatBee {
+            0%, 100% {
+                transform: scaleX(-1) translateY(0);
+            }
+            50% {
+                transform: scaleX(-1) translateY(-8px);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .viewer-bee {
+                width: 50px;
+                right: 10%;
+            }
         }
 
         /* Panel */
@@ -556,6 +586,7 @@
                 <p id="desc">Descripción</p>
             </div>
             <div class="viewer-hint">Arrastra para rotar • Scroll para zoom</div>
+            <img src="assets/images/bombus_bee_honey.png" class="viewer-bee" alt="">
         </div>
 
         <div class="panel">

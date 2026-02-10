@@ -1,6 +1,6 @@
 # BOMBUS LAB - Estado del Proyecto
 
-> **Última actualización:** 8 Febrero 2025
+> **Última actualización:** 9 Febrero 2025
 > **Repositorio:** https://github.com/chuchurex/bombuslab
 > **Deploy:** Cloudflare Pages (auto-deploy desde main)
 
@@ -23,9 +23,9 @@ Negocio chileno de **veladores (mesas de noche) personalizables** fabricados a m
 ```
 bombuslab/
 ├── index.html                 ← Landing principal (4 categorías)
-├── bombus_galeria.html        ← Galería con 44 modelos + filtros
+├── bombus_galeria.html        ← Galería con 40 modelos + filtros + SVGs técnicos
 ├── bombus_configurador.html   ← Configurador 3D (Three.js) + WhatsApp CTA
-├── bombus_catalogo.json       ← FUENTE ÚNICA de datos (44 modelos)
+├── bombus_catalogo.json       ← FUENTE ÚNICA de datos (40 modelos)
 ├── sitemap.xml                ← Sitemap para SEO
 ├── robots.txt                 ← Robots para SEO
 ├── .nojekyll                  ← Para compatibilidad GitHub Pages/Cloudflare
@@ -50,7 +50,7 @@ bombuslab/
 |-------|--------|-------|
 | Unificar datos (JSON único) | ✅ | Galería ahora lee de `bombus_catalogo.json` |
 | Navegación funcional | ✅ | Ya funcionaba correctamente |
-| 44 modelos en configurador | ✅ | Ya estaban cargados |
+| 40 modelos en configurador | ✅ | Ya estaban cargados |
 | WhatsApp real | ✅ | Número: `56966172583` |
 | Analytics básico | ✅ | `assets/js/analytics.js` creado |
 | Deploy en Cloudflare | ✅ | Auto-deploy desde main |
@@ -69,6 +69,17 @@ bombuslab/
 | Responsive mobile-first | ✅ | Galería 2-col/1-col, configurador adaptado |
 
 **Commit:** `5c75c4a` - Phase 2: SEO optimization + responsive mobile-first
+
+### ✅ Fase 2.5: Sistema de SVGs técnicos
+| Tarea | Estado | Notas |
+|-------|--------|-------|
+| SVG material palette | ✅ | 9 materiales con colores para fill, stroke, drawer, handle, accent |
+| SVG renderers por modelo | ✅ | 40 funciones SVG inline en `bombus_galeria.html` |
+| Material dots selector | ✅ | Click para cambiar colores del SVG en tiempo real |
+| Actualización catálogo | ✅ | De 44 a 40 modelos (removidos S08, C01, C04, C06-C08, C10, M04) |
+| Nuevos modelos Cálido | ✅ | C11 Ranurado, C12 Calado, C13 Listón, C14 Surco |
+
+**Materiales disponibles:** MDF Blanco, MDF Negro, Melamina Roble, Melamina Nogal, Melamina Ceniza, Pino Natural, Terciado, Terciado Negro, OSB
 
 ---
 
@@ -101,7 +112,7 @@ bombuslab/
 ### Imágenes
 - [ ] **Crear `bombus_og_image.png`** (1200x630px) para compartir en redes
 - [ ] Fotos reales de productos o renders AI para la galería
-- [ ] Reemplazar SVG placeholders por imágenes reales
+- [x] ~~Reemplazar SVG placeholders por imágenes reales~~ → SVGs técnicos inline implementados
 
 ### Analytics (IMPORTANTE)
 Editar `assets/js/analytics.js` y configurar:
@@ -131,12 +142,12 @@ const META_PIXEL_ID = 'XXXXXXXXXXXXXXX';     // Obtener de Meta Business Suite
 Landing → Galería → Configurador 3D → WhatsApp → Cotización → Venta
 ```
 
-### Catálogo de Modelos (44 total)
+### Catálogo de Modelos (40 total)
 | Categoría | Cantidad | Características |
 |-----------|----------|-----------------|
-| Simple | 12 | Minimalistas, líneas rectas |
-| Cálido | 10 | Ratán, madera noble, texturas naturales |
-| Moderno | 14 | Tech integrada, materiales contemporáneos |
+| Simple | 11 | Minimalistas, líneas rectas |
+| Cálido | 8 | Madera natural, calado y ranurado |
+| Moderno | 13 | Tech integrada, materiales contemporáneos |
 | Clásico | 8 | Molduras, patas torneadas, elegancia |
 
 ### Gadgets Disponibles

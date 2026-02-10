@@ -3,17 +3,17 @@
     "simple": {
       "nombre": "Simple",
       "descripcion": "Líneas limpias, sin excesos",
-      "modelos": ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11", "S12"]
+      "modelos": ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S09", "S10", "S11", "S12"]
     },
     "calido": {
-      "nombre": "Cálido", 
-      "descripcion": "Texturas naturales, tonos tierra",
-      "modelos": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"]
+      "nombre": "Cálido",
+      "descripcion": "Madera natural, calado y ranurado",
+      "modelos": ["C02", "C03", "C05", "C09", "C11", "C12", "C13", "C14"]
     },
     "moderno": {
       "nombre": "Moderno",
       "descripcion": "Geométrico, contemporáneo",
-      "modelos": ["M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "M14"]
+      "modelos": ["M01", "M02", "M03", "M05", "M06", "M07", "M08", "M09", "M10", "M11", "M12", "M13", "M14"]
     },
     "clasico": {
       "nombre": "Clásico",
@@ -25,35 +25,35 @@
     "S01": {
       "nombre": "Cubo",
       "categoria": "simple",
-      "descripcion": "Forma cúbica pura con 1 cajón",
+      "descripcion": "Cúbica · 1 cajón · patas cortas",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 40, "profundo": 40, "alto": 45 },
       "dimensiones_min": { "ancho": 35, "profundo": 35, "alto": 40 },
       "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 55 },
       "precio_base": 75000,
-      "materiales": ["mdf_blanco", "mdf_negro", "melamina"],
+      "materiales": ["mdf_blanco", "mdf_negro", "melamina", "triplay"],
       "compatible_gadgets": ["usb", "led"],
       "referencia_mercado": "IKEA EKET style"
     },
     "S02": {
       "nombre": "Aire",
       "categoria": "simple",
-      "descripcion": "Flotante minimalista con cajón oculto",
+      "descripcion": "Flotante · cajón push · sin tirador",
       "cajones": 1,
       "montaje": "flotante",
       "dimensiones_base": { "ancho": 45, "profundo": 35, "alto": 20 },
       "dimensiones_min": { "ancho": 40, "profundo": 30, "alto": 15 },
       "dimensiones_max": { "ancho": 60, "profundo": 40, "alto": 25 },
       "precio_base": 85000,
-      "materiales": ["mdf_blanco", "mdf_negro", "roble"],
+      "materiales": ["mdf_blanco", "mdf_negro", "roble", "triplay"],
       "compatible_gadgets": ["usb", "wireless", "led"],
       "referencia_mercado": "IKEA LACK shelf style"
     },
     "S03": {
       "nombre": "Torre",
       "categoria": "simple",
-      "descripcion": "Vertical con 3 cajones estrechos",
+      "descripcion": "Vertical · 3 cajones",
       "cajones": 3,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 35, "profundo": 40, "alto": 65 },
@@ -67,7 +67,7 @@
     "S04": {
       "nombre": "Plano",
       "categoria": "simple",
-      "descripcion": "Bajo y ancho, 2 cajones lado a lado",
+      "descripcion": "Bajo ancho · 2 cajones lado a lado",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 60, "profundo": 40, "alto": 40 },
@@ -81,21 +81,21 @@
     "S05": {
       "nombre": "Nicho",
       "categoria": "simple",
-      "descripcion": "Repisa abierta + 1 cajón inferior",
+      "descripcion": "Nicho abierto + cajón inferior",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
       "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
       "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
       "precio_base": 79000,
-      "materiales": ["mdf_blanco", "melamina", "roble"],
+      "materiales": ["mdf_blanco", "melamina", "roble", "triplay"],
       "compatible_gadgets": ["usb", "led"],
       "referencia_mercado": "IKEA VIKHAMMER style"
     },
     "S06": {
       "nombre": "Duo",
       "categoria": "simple",
-      "descripcion": "2 cajones apilados, sin patas",
+      "descripcion": "2 cajones · sin patas",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 50 },
@@ -109,7 +109,7 @@
     "S07": {
       "nombre": "Zócalo",
       "categoria": "simple",
-      "descripcion": "Base corrida, 2 cajones, muy limpio",
+      "descripcion": "Base ancha · 2 cajones · muy limpio",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 42, "alto": 52 },
@@ -120,24 +120,10 @@
       "compatible_gadgets": ["usb", "wireless", "led"],
       "referencia_mercado": "Plinth base modern"
     },
-    "S08": {
-      "nombre": "Riel",
-      "categoria": "simple",
-      "descripcion": "Flotante con riel metálico visible",
-      "cajones": 1,
-      "montaje": "flotante",
-      "dimensiones_base": { "ancho": 50, "profundo": 35, "alto": 18 },
-      "dimensiones_min": { "ancho": 45, "profundo": 30, "alto": 15 },
-      "dimensiones_max": { "ancho": 60, "profundo": 40, "alto": 22 },
-      "precio_base": 92000,
-      "materiales": ["mdf_blanco", "mdf_negro", "roble"],
-      "compatible_gadgets": ["usb", "wireless"],
-      "referencia_mercado": "Industrial floating"
-    },
     "S09": {
       "nombre": "Cero",
       "categoria": "simple",
-      "descripcion": "Sin tiradores, apertura push",
+      "descripcion": "Sin tiradores · apertura push",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
@@ -151,21 +137,21 @@
     "S10": {
       "nombre": "Mesa",
       "categoria": "simple",
-      "descripcion": "Forma de mesa con repisa inferior",
+      "descripcion": "Abierto · con repisa",
       "cajones": 0,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 50 },
       "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 45 },
       "dimensiones_max": { "ancho": 55, "profundo": 45, "alto": 55 },
       "precio_base": 65000,
-      "materiales": ["mdf_blanco", "melamina", "roble"],
+      "materiales": ["mdf_blanco", "melamina", "roble", "triplay"],
       "compatible_gadgets": ["usb"],
       "referencia_mercado": "Simple table style"
     },
     "S11": {
       "nombre": "Doble Aire",
       "categoria": "simple",
-      "descripcion": "2 módulos flotantes apilados",
+      "descripcion": "2 módulos flotantes",
       "cajones": 2,
       "montaje": "flotante",
       "dimensiones_base": { "ancho": 45, "profundo": 30, "alto": 35 },
@@ -179,35 +165,21 @@
     "S12": {
       "nombre": "Escalón",
       "categoria": "simple",
-      "descripcion": "Asimétrico, 2 niveles escalonados",
+      "descripcion": "Asimétrico · 2 niveles",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 40, "alto": 50 },
       "dimensiones_min": { "ancho": 45, "profundo": 35, "alto": 45 },
       "dimensiones_max": { "ancho": 60, "profundo": 45, "alto": 55 },
       "precio_base": 88000,
-      "materiales": ["mdf_blanco", "mdf_gris", "roble"],
+      "materiales": ["mdf_blanco", "mdf_gris", "roble", "triplay"],
       "compatible_gadgets": ["usb", "led"],
       "referencia_mercado": "Stepped asymmetric"
-    },
-    "C01": {
-      "nombre": "Ratán",
-      "categoria": "calido",
-      "descripcion": "Frentes de ratán tejido, 2 cajones",
-      "cajones": 2,
-      "montaje": "piso",
-      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
-      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
-      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
-      "precio_base": 99000,
-      "materiales": ["roble", "pino"],
-      "compatible_gadgets": ["usb"],
-      "referencia_mercado": "Medular/El Container rattan"
     },
     "C02": {
       "nombre": "Nudo",
       "categoria": "calido",
-      "descripcion": "Madera maciza con veta expuesta",
+      "descripcion": "Madera maciza · veta expuesta",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 42, "alto": 50 },
@@ -221,7 +193,7 @@
     "C03": {
       "nombre": "Cabaña",
       "categoria": "calido",
-      "descripcion": "Estilo rústico con puerta",
+      "descripcion": "Rústico · puerta con bisagras",
       "cajones": 0,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
@@ -232,24 +204,10 @@
       "compatible_gadgets": ["usb"],
       "referencia_mercado": "Farmhouse cabinet"
     },
-    "C04": {
-      "nombre": "Trenza",
-      "categoria": "calido",
-      "descripcion": "Detalle trenzado en frente del cajón",
-      "cajones": 1,
-      "montaje": "piso",
-      "dimensiones_base": { "ancho": 42, "profundo": 38, "alto": 52 },
-      "dimensiones_min": { "ancho": 38, "profundo": 35, "alto": 48 },
-      "dimensiones_max": { "ancho": 48, "profundo": 42, "alto": 58 },
-      "precio_base": 89000,
-      "materiales": ["roble", "pino"],
-      "compatible_gadgets": ["usb", "led"],
-      "referencia_mercado": "Woven detail"
-    },
     "C05": {
       "nombre": "Orgánico",
       "categoria": "calido",
-      "descripcion": "Bordes redondeados, patas torneadas",
+      "descripcion": "Bordes redondeados · patas torneadas",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 48, "profundo": 42, "alto": 55 },
@@ -260,52 +218,10 @@
       "compatible_gadgets": ["usb", "wireless"],
       "referencia_mercado": "Organic modern"
     },
-    "C06": {
-      "nombre": "Tronco",
-      "categoria": "calido",
-      "descripcion": "Aspecto de tronco cortado, muy natural",
-      "cajones": 1,
-      "montaje": "piso",
-      "dimensiones_base": { "ancho": 40, "profundo": 40, "alto": 50 },
-      "dimensiones_min": { "ancho": 35, "profundo": 35, "alto": 45 },
-      "dimensiones_max": { "ancho": 45, "profundo": 45, "alto": 55 },
-      "precio_base": 135000,
-      "materiales": ["roble", "nogal"],
-      "compatible_gadgets": [],
-      "referencia_mercado": "Live edge style"
-    },
-    "C07": {
-      "nombre": "Canasto",
-      "categoria": "calido",
-      "descripcion": "Con canasto de fibra como cajón",
-      "cajones": 1,
-      "montaje": "piso",
-      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
-      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
-      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
-      "precio_base": 85000,
-      "materiales": ["pino", "roble"],
-      "compatible_gadgets": ["usb"],
-      "referencia_mercado": "Basket drawer style"
-    },
-    "C08": {
-      "nombre": "Bambú",
-      "categoria": "calido",
-      "descripcion": "Estructura de bambú visible",
-      "cajones": 2,
-      "montaje": "piso",
-      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
-      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
-      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
-      "precio_base": 92000,
-      "materiales": ["bambu"],
-      "compatible_gadgets": ["usb"],
-      "referencia_mercado": "Bamboo frame"
-    },
     "C09": {
       "nombre": "Terracota",
       "categoria": "calido",
-      "descripcion": "Combinación madera + detalle cerámico",
+      "descripcion": "Madera + tirador cerámico",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 42, "profundo": 38, "alto": 50 },
@@ -316,24 +232,66 @@
       "compatible_gadgets": ["usb"],
       "referencia_mercado": "Ceramic detail"
     },
-    "C10": {
-      "nombre": "Cuerda",
+    "C11": {
+      "nombre": "Ranurado",
       "categoria": "calido",
-      "descripcion": "Tiradores y detalles en cuerda natural",
+      "descripcion": "Ranuras verticales fresadas",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
       "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
       "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
-      "precio_base": 88000,
-      "materiales": ["pino", "roble"],
+      "precio_base": 99000,
+      "materiales": ["triplay", "pino", "roble"],
       "compatible_gadgets": ["usb", "led"],
-      "referencia_mercado": "Rope handle coastal"
+      "referencia_mercado": "Maderística style"
+    },
+    "C12": {
+      "nombre": "Calado",
+      "categoria": "calido",
+      "descripcion": "Panel perforado circular · puerta",
+      "cajones": 0,
+      "montaje": "piso",
+      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
+      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
+      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
+      "precio_base": 95000,
+      "materiales": ["triplay", "pino", "mdf_blanco"],
+      "compatible_gadgets": ["usb"],
+      "referencia_mercado": "Perforated panel"
+    },
+    "C13": {
+      "nombre": "Listón",
+      "categoria": "calido",
+      "descripcion": "Listones horizontales · 2 cajones",
+      "cajones": 2,
+      "montaje": "piso",
+      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
+      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
+      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
+      "precio_base": 92000,
+      "materiales": ["triplay", "pino", "roble"],
+      "compatible_gadgets": ["usb", "led"],
+      "referencia_mercado": "Slat front"
+    },
+    "C14": {
+      "nombre": "Surco",
+      "categoria": "calido",
+      "descripcion": "Ranuras diagonales chevron · 2 cajones",
+      "cajones": 2,
+      "montaje": "piso",
+      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
+      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
+      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
+      "precio_base": 98000,
+      "materiales": ["triplay", "pino", "roble"],
+      "compatible_gadgets": ["usb", "led"],
+      "referencia_mercado": "Chevron pattern"
     },
     "M01": {
       "nombre": "Neo",
       "categoria": "moderno",
-      "descripcion": "Líneas angulares, patas metálicas",
+      "descripcion": "Líneas angulares · patas metálicas",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 42, "alto": 55 },
@@ -347,7 +305,7 @@
     "M02": {
       "nombre": "Smart",
       "categoria": "moderno",
-      "descripcion": "Diseñado para tecnología integrada",
+      "descripcion": "Tecnología integrada",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 40, "alto": 52 },
@@ -361,7 +319,7 @@
     "M03": {
       "nombre": "Cristal",
       "categoria": "moderno",
-      "descripcion": "Tapa de vidrio templado",
+      "descripcion": "Tapa vidrio templado",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 48, "profundo": 40, "alto": 50 },
@@ -372,24 +330,10 @@
       "compatible_gadgets": ["usb", "wireless", "led"],
       "referencia_mercado": "Glass top modern"
     },
-    "M04": {
-      "nombre": "Acero",
-      "categoria": "moderno",
-      "descripcion": "Estructura metálica vista",
-      "cajones": 2,
-      "montaje": "piso",
-      "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
-      "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 50 },
-      "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 60 },
-      "precio_base": 115000,
-      "materiales": ["mdf_negro", "roble"],
-      "compatible_gadgets": ["usb", "led", "outlet"],
-      "referencia_mercado": "Industrial metal frame"
-    },
     "M05": {
       "nombre": "LED",
       "categoria": "moderno",
-      "descripcion": "Iluminación LED perimetral incluida",
+      "descripcion": "Iluminación LED perimetral",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 40, "alto": 55 },
@@ -403,7 +347,7 @@
     "M06": {
       "nombre": "Seguro",
       "categoria": "moderno",
-      "descripcion": "Cajón con cerradura biométrica",
+      "descripcion": "Cerradura biométrica",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 42, "alto": 55 },
@@ -417,7 +361,7 @@
     "M07": {
       "nombre": "Cantilever",
       "categoria": "moderno",
-      "descripcion": "Flotante con soporte en C",
+      "descripcion": "Flotante · soporte en C",
       "cajones": 1,
       "montaje": "flotante",
       "dimensiones_base": { "ancho": 55, "profundo": 35, "alto": 20 },
@@ -431,14 +375,14 @@
     "M08": {
       "nombre": "Hexágono",
       "categoria": "moderno",
-      "descripcion": "Forma hexagonal, muy distintivo",
+      "descripcion": "Forma hexagonal",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 50 },
       "dimensiones_min": { "ancho": 40, "profundo": 35, "alto": 45 },
       "dimensiones_max": { "ancho": 50, "profundo": 45, "alto": 55 },
       "precio_base": 98000,
-      "materiales": ["mdf_blanco", "mdf_negro", "roble"],
+      "materiales": ["mdf_blanco", "mdf_negro", "roble", "triplay"],
       "compatible_gadgets": ["usb", "led"],
       "referencia_mercado": "Geometric hexagon"
     },
@@ -473,7 +417,7 @@
     "M11": {
       "nombre": "Cilindro",
       "categoria": "moderno",
-      "descripcion": "Forma cilíndrica con cajón oculto",
+      "descripcion": "Forma cilíndrica · cajón oculto",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 40, "profundo": 40, "alto": 55 },
@@ -487,7 +431,7 @@
     "M12": {
       "nombre": "Marco",
       "categoria": "moderno",
-      "descripcion": "Estructura tipo marco con caja flotante",
+      "descripcion": "Estructura tipo marco",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 40, "alto": 55 },
@@ -501,7 +445,7 @@
     "M13": {
       "nombre": "Panel",
       "categoria": "moderno",
-      "descripcion": "Frente de panel estriado vertical",
+      "descripcion": "Frente estriado vertical",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 48, "profundo": 40, "alto": 55 },
@@ -515,7 +459,7 @@
     "M14": {
       "nombre": "Mármol",
       "categoria": "moderno",
-      "descripcion": "Tapa efecto mármol o porcelanato",
+      "descripcion": "Tapa efecto mármol",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 42, "alto": 55 },
@@ -529,7 +473,7 @@
     "K01": {
       "nombre": "Colonial",
       "categoria": "clasico",
-      "descripcion": "Molduras clásicas, tiradores metálicos",
+      "descripcion": "Molduras clásicas · tiradores metálicos",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 42, "alto": 60 },
@@ -543,7 +487,7 @@
     "K02": {
       "nombre": "Retro",
       "categoria": "clasico",
-      "descripcion": "Patas cónicas, estilo años 60",
+      "descripcion": "Patas cónicas · estilo años 60",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 40, "alto": 55 },
@@ -557,7 +501,7 @@
     "K03": {
       "nombre": "Provenzal",
       "categoria": "clasico",
-      "descripcion": "Patas torneadas, acabado envejecido",
+      "descripcion": "Patas torneadas · acabado envejecido",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 48, "profundo": 40, "alto": 58 },
@@ -571,7 +515,7 @@
     "K04": {
       "nombre": "Inglés",
       "categoria": "clasico",
-      "descripcion": "Estilo biblioteca, con galería superior",
+      "descripcion": "Estilo biblioteca · galería superior",
       "cajones": 1,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 45, "profundo": 38, "alto": 65 },
@@ -627,7 +571,7 @@
     "K08": {
       "nombre": "Chippendale",
       "categoria": "clasico",
-      "descripcion": "Patas cabriole, muy elegante",
+      "descripcion": "Patas cabriole · muy elegante",
       "cajones": 2,
       "montaje": "piso",
       "dimensiones_base": { "ancho": 50, "profundo": 42, "alto": 60 },
@@ -640,15 +584,15 @@
     }
   },
   "materiales": {
-    "mdf_blanco": { "nombre": "MDF Lacado Blanco", "precio_mod": -10000, "color_hex": "#FAFAFA" },
-    "mdf_negro": { "nombre": "MDF Lacado Negro", "precio_mod": -5000, "color_hex": "#1A1A1A" },
-    "mdf_gris": { "nombre": "MDF Lacado Gris", "precio_mod": -5000, "color_hex": "#607D8B" },
+    "mdf_blanco": { "nombre": "MDF Lacado Blanco", "precio_mod": -10000, "color_hex": "#F0EDE8" },
+    "mdf_negro": { "nombre": "MDF Lacado Negro", "precio_mod": -5000, "color_hex": "#2C2C2C" },
+    "mdf_gris": { "nombre": "MDF Lacado Gris", "precio_mod": -5000, "color_hex": "#78909C" },
     "melamina": { "nombre": "Melamina", "precio_mod": -15000, "color_hex": "#E0E0E0" },
-    "pino": { "nombre": "Pino Finger", "precio_mod": 0, "color_hex": "#DEB887" },
-    "roble": { "nombre": "Roble", "precio_mod": 15000, "color_hex": "#D4A574" },
+    "triplay": { "nombre": "Triplay", "precio_mod": 0, "color_hex": "#D4B896" },
+    "pino": { "nombre": "Pino Finger", "precio_mod": 0, "color_hex": "#DBBF8C" },
+    "roble": { "nombre": "Roble", "precio_mod": 15000, "color_hex": "#C49A6C" },
     "nogal": { "nombre": "Nogal", "precio_mod": 25000, "color_hex": "#5D4037" },
-    "cerezo": { "nombre": "Cerezo", "precio_mod": 20000, "color_hex": "#8B4513" },
-    "bambu": { "nombre": "Bambú", "precio_mod": 10000, "color_hex": "#C4A35A" }
+    "cerezo": { "nombre": "Cerezo", "precio_mod": 20000, "color_hex": "#8B4513" }
   },
   "gadgets": {
     "usb": { "nombre": "Puertos USB-A + USB-C", "precio": 12000 },
@@ -660,11 +604,11 @@
     "fingerprint": { "nombre": "Cerradura huella digital", "precio": 45000 }
   },
   "resumen": {
-    "total_modelos": 44,
+    "total_modelos": 40,
     "por_categoria": {
-      "simple": 12,
-      "calido": 10,
-      "moderno": 14,
+      "simple": 11,
+      "calido": 8,
+      "moderno": 13,
       "clasico": 8
     },
     "rango_precios": {

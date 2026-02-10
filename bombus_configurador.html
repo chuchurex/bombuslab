@@ -607,45 +607,19 @@
                 </div>
             </div>
 
-            <!-- Color -->
+            <!-- Material -->
             <div class="section">
-                <div class="section-title">Color Referencial (Cuerpo)</div>
-                <div class="colors">
-                    <div class="color-opt active" style="background:#FAFAFA;" data-color="0xFFFFFF" data-name="Blanco" data-mod="-10000"></div>
-                    <div class="color-opt" style="background:#1A1A1A;" data-color="0x444444" data-name="Negro" data-mod="-5000"></div>
-                    <div class="color-opt" style="background:#D4A574;" data-color="0xD4A574" data-name="Roble" data-mod="15000"></div>
-                    <div class="color-opt" style="background:#5D4037;" data-color="0x8D6E63" data-name="Nogal" data-mod="25000"></div>
-                    <div class="color-opt" style="background:#DEB887;" data-color="0xE0C097" data-name="Pino" data-mod="0"></div>
+                <div class="section-title">Material</div>
+                <div class="colors" id="material-options">
+                    <!-- Se generan dinámicamente desde JS -->
                 </div>
-                <p style="font-size:0.8rem; color:var(--color-text-muted); margin-top:0.5rem; font-style:italic;">Nota: El visor muestra un esquema técnico. El color seleccionado se aplicará a su pedido.</p>
             </div>
 
             <!-- Gadgets -->
-            <div class="section">
+            <div class="section" id="gadgets-section">
                 <div class="section-title">Extras Tech</div>
-                <div class="gadget" data-gadget="usb" data-precio="12000">
-                    <div class="gadget-check">✓</div>
-                    <div class="gadget-info">
-                        <div class="gadget-name">USB-A + USB-C</div>
-                        <div class="gadget-desc">2 puertos de carga rápida integrados</div>
-                    </div>
-                    <div class="gadget-price">+$12.000</div>
-                </div>
-                <div class="gadget" data-gadget="wireless" data-precio="25000">
-                    <div class="gadget-check">✓</div>
-                    <div class="gadget-info">
-                        <div class="gadget-name">Carga inalámbrica</div>
-                        <div class="gadget-desc">Qi / MagSafe invisible bajo cubierta</div>
-                    </div>
-                    <div class="gadget-price">+$25.000</div>
-                </div>
-                <div class="gadget" data-gadget="led" data-precio="18000">
-                    <div class="gadget-check">✓</div>
-                    <div class="gadget-info">
-                        <div class="gadget-name">Luz LED ambiente</div>
-                        <div class="gadget-desc">Sensor táctil, luz cálida inferior</div>
-                    </div>
-                    <div class="gadget-price">+$18.000</div>
+                <div id="gadgets-container">
+                    <!-- Se generan dinámicamente desde JS -->
                 </div>
             </div>
 
@@ -682,7 +656,7 @@
         // I will redefine the whole script block to be safe and ensure the material logic is updated to Wireframe.
 
         const modelos = {
-            // SIMPLE
+            // SIMPLE (11 modelos)
             S01: { nombre: 'Cubo', desc: 'Forma cúbica pura con 1 cajón', precio: 75000, cajones: 1, categoria: 'simple', forma: 'cubo' },
             S02: { nombre: 'Aire', desc: 'Flotante minimalista con cajón oculto', precio: 85000, cajones: 1, categoria: 'simple', forma: 'flotante' },
             S03: { nombre: 'Torre', desc: 'Vertical con 3 cajones estrechos', precio: 95000, cajones: 3, categoria: 'simple', forma: 'torre' },
@@ -690,29 +664,25 @@
             S05: { nombre: 'Nicho', desc: 'Repisa abierta + 1 cajón inferior', precio: 79000, cajones: 1, categoria: 'simple', forma: 'nicho' },
             S06: { nombre: 'Duo', desc: '2 cajones apilados, sin patas', precio: 85000, cajones: 2, categoria: 'simple', forma: 'standard' },
             S07: { nombre: 'Zócalo', desc: 'Base corrida, 2 cajones', precio: 89000, cajones: 2, categoria: 'simple', forma: 'zocalo' },
-            S08: { nombre: 'Riel', desc: 'Flotante con riel metálico', precio: 92000, cajones: 1, categoria: 'simple', forma: 'flotante' },
             S09: { nombre: 'Cero', desc: 'Sin tiradores, apertura push', precio: 95000, cajones: 2, categoria: 'simple', forma: 'standard' },
             S10: { nombre: 'Mesa', desc: 'Forma de mesa con repisa', precio: 65000, cajones: 0, categoria: 'simple', forma: 'mesa' },
             S11: { nombre: 'Doble Aire', desc: '2 módulos flotantes apilados', precio: 110000, cajones: 2, categoria: 'simple', forma: 'flotante' },
             S12: { nombre: 'Escalón', desc: 'Asimétrico, 2 niveles', precio: 88000, cajones: 1, categoria: 'simple', forma: 'escalon' },
 
-            // CÁLIDO
-            C01: { nombre: 'Ratán', desc: 'Frentes de ratán tejido', precio: 99000, cajones: 2, categoria: 'calido', forma: 'standard' },
+            // CÁLIDO (8 modelos)
             C02: { nombre: 'Nudo', desc: 'Madera con veta expuesta', precio: 120000, cajones: 1, categoria: 'calido', forma: 'standard' },
             C03: { nombre: 'Cabaña', desc: 'Rústico con puerta', precio: 95000, cajones: 0, categoria: 'calido', forma: 'puerta' },
-            C04: { nombre: 'Trenza', desc: 'Detalle trenzado', precio: 89000, cajones: 1, categoria: 'calido', forma: 'standard' },
             C05: { nombre: 'Orgánico', desc: 'Bordes redondeados', precio: 115000, cajones: 2, categoria: 'calido', forma: 'organico' },
-            C06: { nombre: 'Tronco', desc: 'Aspecto natural', precio: 135000, cajones: 1, categoria: 'calido', forma: 'cilindro' },
-            C07: { nombre: 'Canasto', desc: 'Con canasto de fibra', precio: 85000, cajones: 1, categoria: 'calido', forma: 'nicho' },
-            C08: { nombre: 'Bambú', desc: 'Estructura de bambú', precio: 92000, cajones: 2, categoria: 'calido', forma: 'standard' },
             C09: { nombre: 'Terracota', desc: 'Madera + detalle cerámico', precio: 105000, cajones: 1, categoria: 'calido', forma: 'standard' },
-            C10: { nombre: 'Cuerda', desc: 'Tiradores de cuerda', precio: 88000, cajones: 2, categoria: 'calido', forma: 'standard' },
+            C11: { nombre: 'Ranurado', desc: 'Ranuras verticales fresadas', precio: 99000, cajones: 2, categoria: 'calido', forma: 'standard' },
+            C12: { nombre: 'Calado', desc: 'Panel perforado circular', precio: 95000, cajones: 0, categoria: 'calido', forma: 'puerta' },
+            C13: { nombre: 'Listón', desc: 'Frente listones horizontales', precio: 92000, cajones: 2, categoria: 'calido', forma: 'standard' },
+            C14: { nombre: 'Surco', desc: 'Ranuras diagonales en V', precio: 98000, cajones: 2, categoria: 'calido', forma: 'standard' },
 
-            // MODERNO
+            // MODERNO (13 modelos)
             M01: { nombre: 'Neo', desc: 'Líneas angulares, metal', precio: 110000, cajones: 2, categoria: 'moderno', forma: 'angular' },
             M02: { nombre: 'Smart', desc: 'Diseñado para tech', precio: 140000, cajones: 2, categoria: 'moderno', forma: 'standard' },
             M03: { nombre: 'Cristal', desc: 'Tapa de vidrio', precio: 125000, cajones: 1, categoria: 'moderno', forma: 'cristal' },
-            M04: { nombre: 'Acero', desc: 'Estructura metálica', precio: 115000, cajones: 2, categoria: 'moderno', forma: 'marco' },
             M05: { nombre: 'LED', desc: 'Luz LED integrada', precio: 135000, cajones: 2, categoria: 'moderno', forma: 'standard' },
             M06: { nombre: 'Seguro', desc: 'Cerradura biométrica', precio: 165000, cajones: 2, categoria: 'moderno', forma: 'standard' },
             M07: { nombre: 'Cantilever', desc: 'Flotante en C', precio: 105000, cajones: 1, categoria: 'moderno', forma: 'cantilever' },
@@ -724,7 +694,7 @@
             M13: { nombre: 'Panel', desc: 'Panel estriado', precio: 105000, cajones: 2, categoria: 'moderno', forma: 'standard' },
             M14: { nombre: 'Mármol', desc: 'Tapa efecto mármol', precio: 145000, cajones: 2, categoria: 'moderno', forma: 'cristal' },
 
-            // CLÁSICO
+            // CLÁSICO (8 modelos)
             K01: { nombre: 'Colonial', desc: 'Molduras clásicas', precio: 125000, cajones: 2, categoria: 'clasico', forma: 'colonial' },
             K02: { nombre: 'Retro', desc: 'Patas cónicas, años 60', precio: 115000, cajones: 2, categoria: 'clasico', forma: 'retro' },
             K03: { nombre: 'Provenzal', desc: 'Patas torneadas', precio: 130000, cajones: 2, categoria: 'clasico', forma: 'provenzal' },
@@ -733,6 +703,117 @@
             K06: { nombre: 'Shaker', desc: 'Simplicidad tradicional', precio: 105000, cajones: 2, categoria: 'clasico', forma: 'standard' },
             K07: { nombre: 'Viena', desc: 'Curvas estilo Thonet', precio: 118000, cajones: 1, categoria: 'clasico', forma: 'organico' },
             K08: { nombre: 'Chippendale', desc: 'Patas cabriole', precio: 155000, cajones: 2, categoria: 'clasico', forma: 'chippendale' }
+        };
+
+        // Materiales disponibles con precios y colores
+        const MATERIALES = {
+            mdf_blanco: { nombre: 'MDF Blanco',   precio_mod: -10000, color: '#F0EDE8' },
+            mdf_negro:  { nombre: 'MDF Negro',    precio_mod: -5000,  color: '#2C2C2C' },
+            mdf_gris:   { nombre: 'MDF Gris',     precio_mod: -5000,  color: '#78909C' },
+            melamina:   { nombre: 'Melamina',     precio_mod: -15000, color: '#E0E0E0' },
+            triplay:    { nombre: 'Triplay',      precio_mod: 0,      color: '#D4B896' },
+            pino:       { nombre: 'Pino',         precio_mod: 0,      color: '#DBBF8C' },
+            roble:      { nombre: 'Roble',        precio_mod: 15000,  color: '#C49A6C' },
+            nogal:      { nombre: 'Nogal',        precio_mod: 25000,  color: '#5D4037' },
+            cerezo:     { nombre: 'Cerezo',       precio_mod: 20000,  color: '#8B4513' },
+        };
+
+        // Materiales disponibles por modelo (mismos del catálogo JSON y la galería)
+        const MODEL_MATS = {
+            S01: ['mdf_blanco','mdf_negro','melamina','triplay'],
+            S02: ['mdf_blanco','mdf_negro','roble','triplay'],
+            S03: ['mdf_blanco','mdf_gris','melamina'],
+            S04: ['mdf_blanco','mdf_negro'],
+            S05: ['mdf_blanco','melamina','roble','triplay'],
+            S06: ['mdf_blanco','mdf_negro','melamina'],
+            S07: ['mdf_blanco','mdf_gris'],
+            S09: ['mdf_blanco','mdf_negro'],
+            S10: ['mdf_blanco','melamina','roble','triplay'],
+            S11: ['mdf_blanco','mdf_negro'],
+            S12: ['mdf_blanco','mdf_gris','roble','triplay'],
+            C02: ['pino','roble','nogal'],
+            C03: ['pino','roble'],
+            C05: ['roble','nogal'],
+            C09: ['roble','pino'],
+            C11: ['triplay','pino','roble'],
+            C12: ['triplay','pino','mdf_blanco'],
+            C13: ['triplay','pino','roble'],
+            C14: ['triplay','pino','roble'],
+            M01: ['mdf_negro','mdf_blanco','nogal'],
+            M02: ['mdf_blanco','mdf_negro'],
+            M03: ['mdf_negro','mdf_blanco'],
+            M05: ['mdf_blanco','mdf_negro'],
+            M06: ['mdf_negro','nogal'],
+            M07: ['mdf_blanco','mdf_negro','nogal'],
+            M08: ['mdf_blanco','mdf_negro','roble','triplay'],
+            M09: ['mdf_blanco','mdf_negro'],
+            M10: ['mdf_blanco','mdf_negro'],
+            M11: ['mdf_blanco','mdf_negro'],
+            M12: ['mdf_negro','nogal','roble'],
+            M13: ['mdf_blanco','mdf_negro','roble'],
+            M14: ['mdf_blanco','mdf_negro'],
+            K01: ['roble','nogal','cerezo'],
+            K02: ['nogal','roble','cerezo'],
+            K03: ['pino','roble'],
+            K04: ['roble','nogal','cerezo'],
+            K05: ['nogal','roble'],
+            K06: ['pino','roble','cerezo'],
+            K07: ['roble','nogal'],
+            K08: ['nogal','cerezo'],
+        };
+
+        // Gadgets disponibles por modelo (del catálogo JSON)
+        const ALL_GADGETS = {
+            usb:         { nombre: 'USB-A + USB-C',        desc: '2 puertos de carga rápida integrados', precio: 12000 },
+            wireless:    { nombre: 'Carga inalámbrica',    desc: 'Qi / MagSafe invisible en la tapa',    precio: 25000 },
+            led:         { nombre: 'Luz LED ambiente',     desc: 'Sensor táctil, luz cálida inferior',   precio: 18000 },
+            led_rgb:     { nombre: 'LED RGB con control',  desc: 'Luz ambiental con control remoto',     precio: 28000 },
+            outlet:      { nombre: 'Enchufe eléctrico',    desc: 'Enchufe integrado en la trasera',      precio: 8000 },
+            speaker:     { nombre: 'Parlante Bluetooth',   desc: 'Speaker integrado en la estructura',   precio: 35000 },
+            fingerprint: { nombre: 'Cerradura biométrica', desc: 'Huella digital en cajón principal',    precio: 45000 },
+        };
+
+        const MODEL_GADGETS = {
+            S01: ['usb','led'],
+            S02: ['usb','wireless','led'],
+            S03: ['usb'],
+            S04: ['usb','wireless','led'],
+            S05: ['usb','led'],
+            S06: ['usb','wireless'],
+            S07: ['usb','wireless','led'],
+            S09: ['usb','wireless','led'],
+            S10: ['usb'],
+            S11: ['usb','wireless','led'],
+            S12: ['usb','led'],
+            C02: ['usb','led'],
+            C03: ['usb'],
+            C05: ['usb','wireless'],
+            C09: ['usb'],
+            C11: ['usb','led'],
+            C12: ['usb'],
+            C13: ['usb','led'],
+            C14: ['usb','led'],
+            M01: ['usb','wireless','led','outlet'],
+            M02: ['usb','wireless','led','outlet','speaker'],
+            M03: ['usb','wireless','led'],
+            M05: ['usb','wireless','led_rgb'],
+            M06: ['usb','wireless','led','fingerprint'],
+            M07: ['usb','wireless'],
+            M08: ['usb','led'],
+            M09: ['usb','led'],
+            M10: ['usb','wireless','led'],
+            M11: ['usb','wireless'],
+            M12: ['usb','led'],
+            M13: ['usb','wireless','led'],
+            M14: ['usb','wireless','led'],
+            K01: ['usb'],
+            K02: ['usb','led'],
+            K03: ['usb'],
+            K04: ['usb'],
+            K05: ['usb','led'],
+            K06: ['usb'],
+            K07: ['usb'],
+            K08: [],
         };
 
         // Config
@@ -1390,6 +1471,90 @@
             }
         }
 
+        // Generar opciones de material para el modelo actual
+        function renderMaterialOptions() {
+            const container = document.getElementById('material-options');
+            const mats = MODEL_MATS[config.modelo] || ['pino'];
+            const defaultMat = mats[0];
+
+            // Set initial material config
+            const mat = MATERIALES[defaultMat];
+            config.colorName = mat.nombre;
+            config.materialMod = mat.precio_mod;
+            config.materialId = defaultMat;
+
+            container.innerHTML = mats.map((matId, i) => {
+                const m = MATERIALES[matId];
+                const isActive = i === 0;
+                return `<div class="color-opt ${isActive ? 'active' : ''}"
+                    style="background:${m.color};"
+                    data-mat="${matId}"
+                    data-name="${m.nombre}"
+                    data-mod="${m.precio_mod}"
+                    title="${m.nombre} (${m.precio_mod >= 0 ? '+' : ''}$${m.precio_mod.toLocaleString('es-CL')})"></div>`;
+            }).join('');
+
+            // Attach click handlers
+            container.querySelectorAll('.color-opt').forEach(opt => {
+                opt.onclick = () => {
+                    container.querySelectorAll('.color-opt').forEach(o => o.classList.remove('active'));
+                    opt.classList.add('active');
+                    config.colorName = opt.dataset.name;
+                    config.materialMod = parseInt(opt.dataset.mod);
+                    config.materialId = opt.dataset.mat;
+                    updateSummary();
+                };
+            });
+
+            updateSummary();
+        }
+
+        // Generar gadgets compatibles para el modelo actual
+        function renderGadgetOptions() {
+            const container = document.getElementById('gadgets-container');
+            const section = document.getElementById('gadgets-section');
+            const gadgetIds = MODEL_GADGETS[config.modelo] || [];
+
+            if (gadgetIds.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            config.gadgets = []; // Reset gadgets when model changes
+
+            container.innerHTML = gadgetIds.map(gId => {
+                const g = ALL_GADGETS[gId];
+                if (!g) return '';
+                return `<div class="gadget" data-gadget="${gId}" data-precio="${g.precio}">
+                    <div class="gadget-check">✓</div>
+                    <div class="gadget-info">
+                        <div class="gadget-name">${g.nombre}</div>
+                        <div class="gadget-desc">${g.desc}</div>
+                    </div>
+                    <div class="gadget-price">+$${g.precio.toLocaleString('es-CL')}</div>
+                </div>`;
+            }).join('');
+
+            // Attach click handlers
+            container.querySelectorAll('.gadget').forEach(g => {
+                g.onclick = () => {
+                    g.classList.toggle('active');
+                    const gadget = g.dataset.gadget;
+                    if (g.classList.contains('active')) {
+                        config.gadgets.push(gadget);
+                    } else {
+                        config.gadgets = config.gadgets.filter(x => x !== gadget);
+                    }
+                    buildModel();
+                    updateSummary();
+                };
+            });
+        }
+
+        // Llamar al inicializar
+        renderMaterialOptions();
+        renderGadgetOptions();
         buildModel();
 
         // Mouse drag
@@ -1441,34 +1606,6 @@
             };
         });
 
-        // Colors
-        document.querySelectorAll('.color-opt').forEach(opt => {
-            opt.onclick = () => {
-                document.querySelectorAll('.color-opt').forEach(o => o.classList.remove('active'));
-                opt.classList.add('active');
-                config.color = parseInt(opt.dataset.color);
-                config.colorName = opt.dataset.name;
-                config.materialMod = parseInt(opt.dataset.mod);
-                buildModel();
-                updateSummary();
-            };
-        });
-
-        // Gadgets
-        document.querySelectorAll('.gadget').forEach(g => {
-            g.onclick = () => {
-                g.classList.toggle('active');
-                const gadget = g.dataset.gadget;
-                if (g.classList.contains('active')) {
-                    config.gadgets.push(gadget);
-                } else {
-                    config.gadgets = config.gadgets.filter(x => x !== gadget);
-                }
-                buildModel();
-                updateSummary();
-            };
-        });
-
         // Summary
         function updateSummary() {
             const extrasTotal = config.gadgets.reduce((sum, g) => {
@@ -1506,7 +1643,7 @@
             const extras = config.gadgets.length ? config.gadgets.join(', ') : 'ninguno';
             const msg = `Hola! Me interesa el velador *${config.nombre}*:\n` +
                 `- Medidas: ${config.ancho}x${config.prof}x${config.alto} cm\n` +
-                `- Color: ${config.colorName}\n` +
+                `- Material: ${config.colorName}\n` +
                 `- Extras: ${extras}\n` +
                 `- Total: $${total.toLocaleString('es-CL')}\n\n` +
                 `¿Está disponible?`;
